@@ -15,5 +15,8 @@ class Cliente {
     getCpf() {
         return this.cpf;
     }
+    getTipo() {
+        return this.tipo;
+    }
 }
 exports.default = Cliente;
