@@ -1,0 +1,149 @@
++----------------+
+|     Início     |
+| (Menu Principal)|
++----------------+
+      |
+      |   Escolhas do Usuário
+      +---------------------------------------------------------+
+      |        |                 |               |               |
+      v        v                 v               v               v
++----------+ +-----------+ +-------------+ +-------------+ +-------+
+| Estacionar | |  Retirar  | | Ver Vagas   | | Cadastrar   | | Sair  |
+|  Veículo[Menu Principal]
+      |
+      v
+[Seleciona "Estacionar Veículo"]
+      |
+      v
+[Pergunta: Tipo de cliente?]
+      |-------------------------------|
+      |                               |
+      v                               v
+[Mensalista]                     [Avulso]
+      |                               |
+      v                               v
+[Pergunta: Nome do cliente]      [Pergunta: Nome]
+[Pergunta: CPF do cliente]       [Pergunta: CPF]
+      |                               |
+      v                               v
+[Procura cliente cadastrado]     [Pergunta: Categoria do veículo]
+      |                               |
+      |--(Não encontrado)-->[Mensagem de erro e volta ao menu]
+      |
+      v
+[Pergunta: Categoria do veículo para estacionar]
+      |
+      |--(Categoria diferente)-->[Mensagem de erro e volta ao menu]
+      |
+      v
+[Pergunta: Placa do veículo]     [Pergunta: Placa do veículo]
+[Pergunta: Modelo do veículo]    [Pergunta: Modelo do veículo]
+      |                               |
+      v                               v
+[Estaciona veículo e exibe mensagem de sucesso ou erro]   | |  Veículo  | | Disponíveis | | Mensalista  | |       |
++------------+ +-----------+ +-------------+ +-------------+ +-------+
+      |        |                 |               |               |
+      |        |                 |               |               |
+      +--------> Continua para a lógica de cada opção <------------+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+      +----------------------+
+|  Início (Opção 1)    |
++----------------------+
+          |
+          v
++--------------------------+
+|  Sistema pede os dados   |
+|  (tipo, placa, cliente)  |
++--------------------------+
+          |
+          v
++--------------------------+
+|  Usuário insere os dados |
++--------------------------+
+          |
+          v
++--------------------------+
+|  Sistema verifica a      |
+|  disponibilidade da vaga |
++--------------------------+
+          |
+      +---+---+
+      |       |
+      v       v
++-----------+    +----------------------+
+|   Vaga    |    |   Estacionamento     |
+|  Disponível |    |     Está Lotado      |
+|   (SIM)   |    |         (NÃO)        |
++-----------+    +----------------------+
+      |                  |
+      v                  v
++----------------+    +----------------------+
+|  Sistema registra |    |  Exibe mensagem      |
+|    a entrada     |    |  de erro             |
++----------------+    +----------------------+
+      |                           |
+      v                           v
++----------------------+    +----------------------+
+|  Exibe mensagem de   |    |   Fim (Volta ao      |
+|  sucesso             |    |     Menu Principal)  |
++----------------------+    +----------------------+
+      |
+      v
++----------------------+
+|   Fim (Volta ao      |
+|     Menu Principal)  |
++----------------------+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
++---------------------+
+| Início (Opção 2)    |
++---------------------+
+          |
+          v
++--------------------------+
+| Sistema pede a placa     |
+| do veículo               |
++--------------------------+
+          |
+          v
++--------------------------+
+| Usuário insere a placa   |
++--------------------------+
+          |
+          v
++--------------------------+
+| Sistema busca a placa na |
+| lista de estacionados    |
++--------------------------+
+          |
+      +---+---+
+      |       |
+      v       v
++-----------+    +----------------------+
+|  Placa    |    |   Placa não          |
+|  Encontrada |    |   Encontrada         |
+|   (SIM)   |    |      (NÃO)           |
++-----------+    +----------------------+
+      |                  |
+      v                  v
++----------------+    +----------------------+
+| Sistema calcula  |    | Exibe mensagem de    |
+| o valor e libera |    | erro               |
+| a vaga           |    +----------------------+
++----------------+                  |
+      |                           v
+      v                  +----------------------+
++----------------+    |   Fim (Volta ao      |
+| Exibe valor a  |    |     Menu Principal)  |
+| pagar          |    +----------------------+
++----------------+
+      |
+      v
++----------------------+
+|   Fim (Volta ao      |
+|     Menu Principal)  |
++----------------------+
