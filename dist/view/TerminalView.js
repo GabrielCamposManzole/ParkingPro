@@ -16,26 +16,26 @@ class TerminalView {
         let continues = true;
         while (continues) {
             console.log("\n=== Menu do Estacionamento ===");
-            console.log("1. Estacionar Veículo");
-            console.log("2. Retirar Veículo");
-            console.log("3. Ver Vagas Disponíveis");
-            console.log("4. Cadastrar Cliente Mensalista");
-            console.log("5. Sair");
+            console.log("1. Dashboard");
+            console.log("2. Clientes");
+            console.log("3. Veículos");
+            console.log("4. Vagas ");
+            console.log("5. Gestão");
+            console.log("6. Sair");
             const escolha = this.prompt("Escolha uma opção: ");
             switch (escolha) {
                 case "1":
-                    this.controller.estacionarVeiculoView.fluxoEstacionar();
-                    break;
+                    console.log("Opção 1 Dashboard");
                 case "2":
-                    console.log("Opção 2 selecionada: Retirar Veículo");
-                    break;
-                case "3":
-                    console.log("Opção 3 selecionada: Ver Vagas Disponíveis");
-                    break;
-                case "4":
                     this.controller.cadastraCliente.cadastrar();
-                    break;
+                case "3":
+                    console.log("Opção 3 Veículos");
+                case "4":
+                    console.log("Opção 4 Vagas");
                 case "5":
+                    console.log("Opção 5 Gestão");
+                    break;
+                case "6":
                     console.log("Saindo...");
                     continues = false;
                     break;

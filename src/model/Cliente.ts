@@ -1,7 +1,7 @@
 export default class Cliente {
   private nome: string;
   private cpf: string;
-  private tipo :  string ;
+  private tipo : string;
 
     constructor(nome: string, cpf: string, tipo: "mensalista" | "avulso" ) {
         this.nome = nome;

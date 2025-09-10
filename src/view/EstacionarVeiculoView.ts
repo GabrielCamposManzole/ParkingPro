@@ -11,7 +11,7 @@ export default class EstacionarVeiculoView {
   }
 
   public fluxoEstacionar(): void {
-    console.log("\n=== Estacionar Veículo ===");
+    console.log("\n=== Registrar Entrada ===");
     let tipoCliente = this.prompt("Tipo de cliente (1 - Mensalista, 2 - Avulso): ");
     while (tipoCliente !== "1" && tipoCliente !== "2") {
       tipoCliente = this.prompt("Opção inválida. Digite 1 para Mensalista ou 2 para Avulso: ");

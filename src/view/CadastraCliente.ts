@@ -14,11 +14,11 @@ export default class CadastraCliente {
             const nome = this.prompt("Nome: ");
             const cpf = this.prompt("CPF: ");
             const tipo = "mensalista";
-            const valorMensal = this.prompt("Valor mensal do veículo: ");
             let categoria = this.prompt("Categoria do veículo (moto/carro/caminhao): ").toLowerCase();
             while (!["moto", "carro", "caminhao"].includes(categoria)) {
                 categoria = this.prompt("Categoria inválida. Digite moto, carro ou caminhao: ").toLowerCase();
             }
+            const valorMensal = this.prompt("Valor mensal do veículo: ");
     
             const cliente = this.controller.cadastrarCliente(nome, cpf, tipo);
             console.log(`Cliente ${cliente.getNome()} cadastrado com sucesso!`);
