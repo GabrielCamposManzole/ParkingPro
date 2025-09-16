@@ -1,12 +1,14 @@
+import  {ClientType}  from "./ClientType";
+
 export default class Cliente {
   private nome: string;
   private cpf: string;
-  private tipo : string;
+  private tipo : ClientType;
 
-    constructor(nome: string, cpf: string, tipo: "mensalista" | "avulso" ) {
-        this.nome = nome;
+    constructor(nome: string, cpf: string, tipo: ClientType) {
         this.cpf = cpf;
         this.tipo = tipo;
+        this.nome = nome;
     }
     
 
@@ -17,7 +19,7 @@ export default class Cliente {
         return this.cpf;
     }
 
-    public getTipo(): string {
+    public getTipo(): number {
         return this.tipo;
     }
 }

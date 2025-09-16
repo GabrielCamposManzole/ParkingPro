@@ -5,9 +5,9 @@ class Cliente {
     cpf;
     tipo;
     constructor(nome, cpf, tipo) {
-        this.nome = nome;
         this.cpf = cpf;
         this.tipo = tipo;
+        this.nome = nome;
     }
     getNome() {
         return this.nome;

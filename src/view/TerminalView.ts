@@ -16,6 +16,7 @@ export default class TerminalView {
     let continues: boolean = true;
     while (continues) {
       console.log("\n=== Menu do Estacionamento ===");
+      console.log("                     ");
       console.log("1. Dashboard");
       console.log("2. Clientes");
       console.log("3. Veículos");
@@ -28,13 +29,17 @@ export default class TerminalView {
       switch (escolha) {
         case "1":
           console.log("Opção 1 Dashboard");
+          break;
         case "2":
            this.controller.cadastraCliente.cadastrar(); 
+           break;
         case "3":
           console.log("Opção 3 Veículos");
-        case "4":
-          console.log("Opção 4 Vagas");
-        case "5":
+          break;  
+          case "4":
+          this.exibirVagasDisponiveis(50);
+          break;  
+          case "5":
           console.log("Opção 5 Gestão");
           break;
         case "6":

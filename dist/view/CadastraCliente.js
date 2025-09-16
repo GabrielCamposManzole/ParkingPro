@@ -14,7 +14,7 @@ class CadastraCliente {
         console.log("\n=== Cadastro de Cliente Mensalista ===");
         const nome = this.prompt("Nome: ");
         const cpf = this.prompt("CPF: ");
-        const tipo = "mensalista";
+        const tipo = 1; // Mensalista
         let categoria = this.prompt("Categoria do veículo (moto/carro/caminhao): ").toLowerCase();
         while (!["moto", "carro", "caminhao"].includes(categoria)) {
             categoria = this.prompt("Categoria inválida. Digite moto, carro ou caminhao: ").toLowerCase();
