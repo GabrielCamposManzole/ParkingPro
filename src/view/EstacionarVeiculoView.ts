@@ -13,7 +13,7 @@ export default class EstacionarVeiculoView {
   public fluxoEstacionar(): void {
     
 
-    
+
   }
-  }
+}
 
