@@ -21,7 +21,7 @@ export default class CadastraCliente {
             }
             const valorMensal = this.prompt("Valor mensal do veículo: ");
 
-            const cliente = this.controller.cadastrarCliente(nome, cpf, tipo);
+            const cliente = this.controller.newCliente(nome, cpf, tipo);
             console.log(`Cliente ${cliente.getNome()} cadastrado com sucesso!`);
             console.log(`Valor mensal: R$${valorMensal} | Categoria: ${categoria}`);
       }

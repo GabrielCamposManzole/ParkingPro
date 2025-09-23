@@ -21,7 +21,7 @@ export default class EstacionamentoController {
           
      }
 
-     public cadastrarCliente(nome: string, cpf: string, tipo: ClientType): Cliente {
+     public newCliente(nome: string, cpf: string, tipo: ClientType): Cliente {
           const cliente = new Cliente(nome, cpf, tipo);
           return cliente;
      }

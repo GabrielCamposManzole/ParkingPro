@@ -10,10 +10,30 @@ export default class EstacionarVeiculoView {
     this.controller = controller;
   }
 
-  public fluxoEstacionar(): void {
+  public estacionarVeiculo(): void {
+    console.log("\n=== Estacionar Veículo ===");
+    const placa = this.prompt("Placa do veículo: ");
+    const modelo = this.prompt("Modelo do veículo: ");
+    const cor = this.prompt("Cor do veículo: ");
+    const tipo = this.prompt("Tipo do veículo (carro/moto/caminhao): ").toLowerCase();
 
+    if (!["carro", "moto", "caminhao"].includes(tipo)) {
+      console.log("Tipo de veículo inválido. Tente novamente.");
+      return;
+    }
 
-
+    const sucesso = this.controller.estacionarVeiculoService.estacionarVeiculo(placa, modelo, tipo);
+    if (sucesso) {
+      console.log(`Veículo ${placa} estacionado com sucesso!`);
+    } else {
+      console.log("Não há vagas disponíveis no momento.");
+    }
   }
+
+  public exibirVagasDisponiveis(): void {
+    const vagas = this.controller.estacionarVeiculoService.vagasDisponiveis();
+    console.log(`Vagas disponíveis: ${vagas}`);
+  }   
+
 }
 
