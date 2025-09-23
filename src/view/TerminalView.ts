@@ -1,6 +1,7 @@
 
 import PromptSync from "prompt-sync";
 import EstacionamentoController from "../control/EstacionamentoController";
+import clienteView from "./ClienteView";
 
 export default class TerminalView {
   private prompt: PromptSync.Prompt;
@@ -31,10 +32,10 @@ export default class TerminalView {
           console.log("Opção 1 Dashboard");
           break;
         case "2":
-           this.controller.cadastraCliente.cadastrar(); 
+           new clienteView(this.controller).clienteC();
            break;
         case "3":
-          console.log("Opção 3 Veículos");
+        this.controller.estacionarVeiculoView.estacionarVeiculo();
           break;  
           case "4":
           this.exibirVagasDisponiveis(50);

@@ -4,9 +4,11 @@ class Veiculo {
     placa;
     modelo;
     horaEntrada;
-    constructor(placa, modelo) {
+    cor;
+    constructor(placa, modelo, cor) {
         this.placa = placa;
         this.modelo = modelo;
+        this.cor = cor;
     }
     getPlaca() {
         return this.placa;
@@ -19,6 +21,9 @@ class Veiculo {
     }
     getHoraEntrada() {
         return this.horaEntrada;
+    }
+    getCor() {
+        return this.cor;
     }
 }
 exports.default = Veiculo;

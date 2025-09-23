@@ -11,18 +11,22 @@ export default class EstacionarVeiculoView {
   }
 
   public estacionarVeiculo(): void {
-    console.log("\n=== Estacionar Veículo ===");
-    const placa = this.prompt("Placa do veículo: ");
-    const modelo = this.prompt("Modelo do veículo: ");
-    const cor = this.prompt("Cor do veículo: ");
-    const tipo = this.prompt("Tipo do veículo (carro/moto/caminhao): ").toLowerCase();
 
+    console.log("\n=== Estacionar Veículo ===");
+    const tipo = this.prompt("Tipo do veículo (carro/moto/caminhao): ").toLowerCase();
     if (!["carro", "moto", "caminhao"].includes(tipo)) {
       console.log("Tipo de veículo inválido. Tente novamente.");
       return;
     }
+    const modelo = this.prompt("Modelo do veículo: ");
+    const placa = this.prompt("Placa do veículo: ");
+    const cor = this.prompt("Cor do veículo: ");
 
-    const sucesso = this.controller.estacionarVeiculoService.estacionarVeiculo(placa, modelo, tipo);
+
+
+
+    const sucesso = this.controller.estacionarVeiculo(placa, modelo, cor, tipo);
+
     if (sucesso) {
       console.log(`Veículo ${placa} estacionado com sucesso!`);
     } else {
@@ -33,7 +37,5 @@ export default class EstacionarVeiculoView {
   public exibirVagasDisponiveis(): void {
     const vagas = this.controller.estacionarVeiculoService.vagasDisponiveis();
     console.log(`Vagas disponíveis: ${vagas}`);
-  }   
-
+  }
 }
-

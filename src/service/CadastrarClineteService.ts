@@ -1,16 +1,16 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const prompt_sync_1 = __importDefault(require("prompt-sync"));
-class CadastraCliente {
-    controller;
-    prompt = (0, prompt_sync_1.default)();
-    constructor(controller) {
+import PromptSync from "prompt-sync";
+import EstacionamentoController from "../control/EstacionamentoController";
+
+export default class CadastrarClieneteService {
+    private controller: EstacionamentoController;
+    private prompt = PromptSync();
+
+    constructor(controller: EstacionamentoController) {
         this.controller = controller;
     }
-    cadastrar() {
+
+    public cadastrar(): void {
+
         console.log("\n=== Cadastro de Cliente Mensalista ===");
         const nome = this.prompt("Nome: ");
         const cpf = this.prompt("CPF: ");
@@ -20,9 +20,9 @@ class CadastraCliente {
             categoria = this.prompt("Categoria inválida. Digite moto, carro ou caminhao: ").toLowerCase();
         }
         const valorMensal = this.prompt("Valor mensal do veículo: ");
+
         const cliente = this.controller.newCliente(nome, cpf, tipo);
         console.log(`Cliente ${cliente.getNome()} cadastrado com sucesso!`);
         console.log(`Valor mensal: R$${valorMensal} | Categoria: ${categoria}`);
     }
 }
-exports.default = CadastraCliente;
