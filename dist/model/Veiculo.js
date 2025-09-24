@@ -8,10 +8,16 @@ class Veiculo {
     placa;
     modelo;
     horaEntrada;
+<<<<<<< HEAD
     Cliente = new Cliente_1.default();
     constructor(placa, modelo) {
+=======
+    cor;
+    constructor(placa, modelo, cor) {
+>>>>>>> dc3ff32f0ea09eabadb7c0181db1a0fc11ccf841
         this.placa = placa;
         this.modelo = modelo;
+        this.cor = cor;
     }
     getPlaca() {
         return this.placa;
@@ -24,6 +30,9 @@ class Veiculo {
     }
     getHoraEntrada() {
         return this.horaEntrada;
+    }
+    getCor() {
+        return this.cor;
     }
 }
 exports.default = Veiculo;

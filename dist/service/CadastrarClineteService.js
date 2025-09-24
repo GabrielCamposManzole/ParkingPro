@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const prompt_sync_1 = __importDefault(require("prompt-sync"));
-class CadastraCliente {
+class CadastrarClieneteService {
     controller;
     prompt = (0, prompt_sync_1.default)();
     constructor(controller) {
@@ -25,4 +25,4 @@ class CadastraCliente {
         console.log(`Valor mensal: R$${valorMensal} | Categoria: ${categoria}`);
     }
 }
-exports.default = CadastraCliente;
+exports.default = CadastrarClieneteService;
