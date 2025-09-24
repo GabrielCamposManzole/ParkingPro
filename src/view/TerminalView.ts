@@ -31,31 +31,27 @@ export default class TerminalView {
           console.log("Opção 1 Dashboard");
           break;
         case "2":
-<<<<<<< HEAD
-    console.log("\n=== Menu de Clientes ===");
-    console.log("1. Cadastrar Cliente");
-    console.log("2. Listar Clientes");
-    const escolhaCliente = this.prompt("Escolha uma opção: ");
-    switch (escolhaCliente) {
-        case "1":
-            this.controller.cadastraCliente.cadastrarCliente();
-            break;
-        case "2":
-            this.exibirClientes();
-            break;
-    }
-    break;
-=======
-           new clienteView(this.controller).clienteC();
-           break;
->>>>>>> dc3ff32f0ea09eabadb7c0181db1a0fc11ccf841
+
+          console.log("\n=== Menu de Clientes ===");
+          console.log("1. Cadastrar Cliente");
+          console.log("2. Listar Clientes");
+          const escolhaCliente = this.prompt("Escolha uma opção: ");
+          switch (escolhaCliente) {
+            case "1":
+              this.controller.cadastraCliente.cadastrarCliente();
+              break;
+            case "2":
+              this.exibirClientes();
+              break;
+          }
+          break;
         case "3":
-        this.controller.estacionarVeiculoView.estacionarVeiculo();
-          break;  
-          case "4":
+          this.controller.estacionarVeiculoView.estacionarVeiculo();
+          break;
+        case "4":
           this.exibirVagasDisponiveis(50);
-          break;  
-          case "5":
+          break;
+        case "5":
           console.log("Opção 5 Gestão");
           break;
         case "6":
@@ -72,13 +68,13 @@ export default class TerminalView {
     const clientes = this.controller.database.clienteDB;
     console.log("\n=== Lista de Clientes ===");
     if (clientes.length === 0) {
-        console.log("Nenhum cliente cadastrado.");
+      console.log("Nenhum cliente cadastrado.");
     } else {
-        clientes.forEach(cliente => {
-            console.log(`Nome: ${cliente.getNome()}, CPF: ${cliente.getCpf()}, Tipo: ${cliente.getTipo()}`);
-        });
+      clientes.forEach(cliente => {
+        console.log(`Nome: ${cliente.getNome()}, CPF: ${cliente.getCpf()}, Tipo: ${cliente.getTipo()}`);
+      });
     }
-}
+  }
 
   public exibirVagasDisponiveis(vagas: number): void {
     console.log(`Vagas disponíveis: ${vagas}`);
