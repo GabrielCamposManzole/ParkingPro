@@ -29,7 +29,7 @@ class TerminalView {
                     console.log("Opção 1 Dashboard");
                     break;
                 case "2":
-                    this.controller.cadastraCliente.cadastrar();
+                    this.controller.cadastraCliente.cadastrarCliente(); // Chama o método cadastrarCliente() *na instância* cadastraCliente
                     break;
                 case "3":
                     console.log("Opção 3 Veículos");

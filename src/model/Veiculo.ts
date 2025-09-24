@@ -1,8 +1,11 @@
+import Cliente from "./Cliente";
+
 export default abstract class Veiculo {
   private placa: string;
   private modelo: string;
   private horaEntrada?: Date;
-
+  private Cliente: Cliente = new Cliente();
+  
   constructor(placa: string, modelo: string) {
     this.placa = placa;
     this.modelo = modelo;
