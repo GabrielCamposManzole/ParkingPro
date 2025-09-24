@@ -30,8 +30,19 @@ export default class TerminalView {
           console.log("Opção 1 Dashboard");
           break;
         case "2":
-            this.controller.cadastraCliente.cadastrarCliente(); // Chama o método cadastrarCliente() *na instância* cadastraCliente
+    console.log("\n=== Menu de Clientes ===");
+    console.log("1. Cadastrar Cliente");
+    console.log("2. Listar Clientes");
+    const escolhaCliente = this.prompt("Escolha uma opção: ");
+    switch (escolhaCliente) {
+        case "1":
+            this.controller.cadastraCliente.cadastrarCliente();
             break;
+        case "2":
+            this.exibirClientes();
+            break;
+    }
+    break;
         case "3":
           console.log("Opção 3 Veículos");
           break;  
@@ -50,6 +61,18 @@ export default class TerminalView {
       }
     }
   }
+
+  public exibirClientes(): void {
+    const clientes = this.controller.database.clienteDB;
+    console.log("\n=== Lista de Clientes ===");
+    if (clientes.length === 0) {
+        console.log("Nenhum cliente cadastrado.");
+    } else {
+        clientes.forEach(cliente => {
+            console.log(`Nome: ${cliente.getNome()}, CPF: ${cliente.getCpf()}, Tipo: ${cliente.getTipo()}`);
+        });
+    }
+}
 
   public exibirVagasDisponiveis(vagas: number): void {
     console.log(`Vagas disponíveis: ${vagas}`);

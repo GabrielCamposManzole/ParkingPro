@@ -1,7 +1,7 @@
 import PromptSync from "prompt-sync";
-
 import Cliente from "../model/Cliente";
 import EstacionamentoController from "../control/EstacionamentoController";
+import { ClientType } from "../model/ClientType"; // Importação do enum ClientType
 
 export default class Cadastro {
       private controller: EstacionamentoController;
@@ -17,12 +17,14 @@ export default class Cadastro {
             console.log("\n=== Cadastro de Cliente Mensalista ===");
             novoCliente.setNome(this.prompt("Nome: "));
             novoCliente.setCpf(this.prompt("CPF: "));
-            let tipo = this.prompt("Tipo (1 - Comum | 2 - Vip | 3 - Premium): ");
-            while (!["1", "2", "3"].includes(tipo)) {
+            let tipo = this.prompt("Tipo (1 - Mensalista | 2 - Avulso | 3 - Especial): ");
+            
+            // Validação aprimorada usando o enum ClientType
+            while (!Object.values(ClientType).includes(parseInt(tipo))) {
                   tipo = this.prompt("Tipo inválido. Digite 1, 2 ou 3: ");
             }
-            // aqui o cliente está com os valores do usuário
-            novoCliente.setTipo(parseInt(tipo) as any); // Type assertion to ClientType enum
+            
+            novoCliente.setTipo(parseInt(tipo) as ClientType);
             console.log("\nCliente cadastrado com sucesso!");
             console.log(`Nome: ${novoCliente.getNome()}`);
             console.log(`CPF: ${novoCliente.getCpf()}`);
@@ -33,6 +35,7 @@ export default class Cadastro {
        
       public cadastrarVeiculo(): void {
           // pede um carro para controller
+              let novoVeiculo = this.controller.getNewVeiculo();
           // listar os clientes para user escolher
           // pede ao user a categoria do carro
           // pede os demais daddos ao user

@@ -5,6 +5,7 @@ import TerminalView from "../view/TerminalView";
 import Cliente from "../model/Cliente";
 import { ClientType } from "../model/ClientType";
 import Database from "../db/Database";
+import Veiculo from "../model/Veiculo";
 
 export default class EstacionamentoController {
 
@@ -26,4 +27,12 @@ export default class EstacionamentoController {
         return new Cliente();
     }
 
+    public getNewVeiculo() {
+        return new Veiculo();
+
+    }
+
+    public listarClientes(): Cliente[] {
+    return this.database.clienteDB;
+}
 }
