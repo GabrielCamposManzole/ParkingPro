@@ -1,5 +1,5 @@
 import Veiculo from './Veiculo';
-
+import { TipoVeiculo } from './TipoVeiculo';
 
 export default class Moto extends Veiculo {
 
@@ -9,6 +9,9 @@ export default class Moto extends Veiculo {
     super(placa, modelo, cor);
   }
 
+  public getTipo(): TipoVeiculo {
+    return TipoVeiculo.MOTO;
+  }
   
 
 }

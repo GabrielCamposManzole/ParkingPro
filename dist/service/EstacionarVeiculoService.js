@@ -1,8 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class EstacionarVeiculoService {
-<<<<<<< HEAD
-=======
     veiculosEstacionados = [];
     limiteVagas;
     constructor(limiteVagas = 100) {
@@ -36,6 +34,8 @@ class EstacionarVeiculoService {
     getLimiteVagas() {
         return this.limiteVagas;
     }
->>>>>>> dc3ff32f0ea09eabadb7c0181db1a0fc11ccf841
+    setLimiteVagas(limite) {
+        this.limiteVagas = limite;
+    }
 }
 exports.default = EstacionarVeiculoService;

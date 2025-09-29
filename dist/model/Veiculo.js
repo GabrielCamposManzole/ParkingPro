@@ -1,20 +1,12 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const Cliente_1 = __importDefault(require("./Cliente"));
 class Veiculo {
     placa;
     modelo;
-    horaEntrada;
-<<<<<<< HEAD
-    Cliente = new Cliente_1.default();
-    constructor(placa, modelo) {
-=======
     cor;
+    horaEntrada;
+    cliente;
     constructor(placa, modelo, cor) {
->>>>>>> dc3ff32f0ea09eabadb7c0181db1a0fc11ccf841
         this.placa = placa;
         this.modelo = modelo;
         this.cor = cor;
@@ -33,6 +25,12 @@ class Veiculo {
     }
     getCor() {
         return this.cor;
+    }
+    setCliente(cliente) {
+        this.cliente = cliente;
+    }
+    getCliente() {
+        return this.cliente;
     }
 }
 exports.default = Veiculo;

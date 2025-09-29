@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const prompt_sync_1 = __importDefault(require("prompt-sync"));
+const ClientType_1 = require("../model/ClientType");
 class CadastrarClieneteService {
     controller;
     prompt = (0, prompt_sync_1.default)();
@@ -14,15 +15,15 @@ class CadastrarClieneteService {
         console.log("\n=== Cadastro de Cliente Mensalista ===");
         const nome = this.prompt("Nome: ");
         const cpf = this.prompt("CPF: ");
-        const tipo = 1; // Mensalista
-        let categoria = this.prompt("Categoria do veículo (moto/carro/caminhao): ").toLowerCase();
-        while (!["moto", "carro", "caminhao"].includes(categoria)) {
-            categoria = this.prompt("Categoria inválida. Digite moto, carro ou caminhao: ").toLowerCase();
+        let tipoInput = this.prompt("Tipo (1 - Mensalista | 2 - Avulso | 3 - Especial): ");
+        const tiposPermitidos = Object.values(ClientType_1.ClientType).filter(value => typeof value === 'number');
+        let tipo = parseInt(tipoInput);
+        while (!tiposPermitidos.includes(tipo)) {
+            tipoInput = this.prompt("Tipo inválido. Digite 1, 2 ou 3: ");
+            tipo = parseInt(tipoInput);
         }
-        const valorMensal = this.prompt("Valor mensal do veículo: ");
-        const cliente = this.controller.newCliente(nome, cpf, tipo);
+        const cliente = this.controller.criarCliente(nome, cpf, tipo);
         console.log(`Cliente ${cliente.getNome()} cadastrado com sucesso!`);
-        console.log(`Valor mensal: R$${valorMensal} | Categoria: ${categoria}`);
     }
 }
 exports.default = CadastrarClieneteService;

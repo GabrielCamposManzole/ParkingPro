@@ -1,18 +1,14 @@
-import Cliente from "./Cliente";
+import Cliente from './Cliente';
+import { TipoVeiculo } from './TipoVeiculo';
 
 export default abstract class Veiculo {
   private placa: string;
   private modelo: string;
-  private horaEntrada?: Date;
-<<<<<<< HEAD
-  private Cliente: Cliente = new Cliente();
-  
-  constructor(placa: string, modelo: string) {
-=======
   private cor: string;
-
-  constructor(placa: string, modelo: string, cor: string ) {
->>>>>>> dc3ff32f0ea09eabadb7c0181db1a0fc11ccf841
+  private horaEntrada?: Date;
+  private cliente?: Cliente;
+  
+  constructor(placa: string, modelo: string, cor: string) {
     this.placa = placa;
     this.modelo = modelo;
     this.cor = cor;
@@ -34,6 +30,14 @@ export default abstract class Veiculo {
     return this.cor;
   }
 
+  public setCliente(cliente: Cliente): void {
+    this.cliente = cliente;
+  }
 
-
+  public getCliente(): Cliente | undefined {
+      return this.cliente;
+  }
+  
+  // Novo método abstrato para obter o tipo do veículo
+  public abstract getTipo(): TipoVeiculo;
 }

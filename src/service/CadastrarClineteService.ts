@@ -1,5 +1,6 @@
 import PromptSync from "prompt-sync";
 import EstacionamentoController from "../control/EstacionamentoController";
+import { ClientType } from "../model/ClientType";
 
 export default class CadastrarClieneteService {
     private controller: EstacionamentoController;
@@ -10,19 +11,21 @@ export default class CadastrarClieneteService {
     }
 
     public cadastrar(): void {
-
         console.log("\n=== Cadastro de Cliente Mensalista ===");
         const nome = this.prompt("Nome: ");
         const cpf = this.prompt("CPF: ");
-        const tipo = 1; // Mensalista
-        let categoria = this.prompt("Categoria do veículo (moto/carro/caminhao): ").toLowerCase();
-        while (!["moto", "carro", "caminhao"].includes(categoria)) {
-            categoria = this.prompt("Categoria inválida. Digite moto, carro ou caminhao: ").toLowerCase();
-        }
-        const valorMensal = this.prompt("Valor mensal do veículo: ");
+        let tipoInput = this.prompt("Tipo (1 - Mensalista | 2 - Avulso | 3 - Especial): ");
 
-        const cliente = this.controller.newCliente(nome, cpf, tipo);
+        const tiposPermitidos = Object.values(ClientType).filter(value => typeof value === 'number');
+        let tipo: number = parseInt(tipoInput);
+
+        while (!tiposPermitidos.includes(tipo)) {
+            tipoInput = this.prompt("Tipo inválido. Digite 1, 2 ou 3: ");
+            tipo = parseInt(tipoInput);
+        }
+
+        const cliente = this.controller.criarCliente(nome, cpf, tipo as ClientType);
+        
         console.log(`Cliente ${cliente.getNome()} cadastrado com sucesso!`);
-        console.log(`Valor mensal: R$${valorMensal} | Categoria: ${categoria}`);
     }
 }

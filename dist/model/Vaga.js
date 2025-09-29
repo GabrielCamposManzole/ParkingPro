@@ -9,6 +9,9 @@ class Vaga {
         this.ocupada = false;
         this.tipoVaga = tipoVaga;
     }
+    getNumero() {
+        return this.numero;
+    }
     isOcupada() {
         return this.ocupada;
     }
@@ -17,9 +20,6 @@ class Vaga {
     }
     desocupar() {
         this.ocupada = false;
-    }
-    getNumero() {
-        return this.numero;
     }
     getTipoVaga() {
         return this.tipoVaga;

@@ -14,18 +14,26 @@ class clienteView {
     clienteC() {
         let continues = true;
         while (continues) {
-            console.log("\n=== Menu do Estacionamento ===");
-            console.log("                     ");
+            console.log("\n=== Menu de Clientes ===");
             console.log("1. Cadastro de Cliente");
             console.log("2. Listar Clientes");
             console.log("6. Sair");
             const escolha = this.prompt("Escolha uma opção: ");
             switch (escolha) {
                 case "1":
-                    this.controller.cadastrarClienteService.cadastrar();
+                    this.controller.cadastraCliente.cadastrarCliente();
                     break;
                 case "2":
-                    console;
+                    console.log("\n=== Lista de Clientes ===");
+                    const clientes = this.controller.listarClientes();
+                    if (clientes.length === 0) {
+                        console.log("Nenhum cliente cadastrado.");
+                    }
+                    else {
+                        clientes.forEach((cliente, index) => {
+                            console.log(`${index + 1}. Nome: ${cliente.getNome()}, CPF: ${cliente.getCpf()}`);
+                        });
+                    }
                     break;
                 case "6":
                     console.log("Saindo...");

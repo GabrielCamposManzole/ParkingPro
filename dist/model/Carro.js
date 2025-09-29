@@ -4,9 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Veiculo_1 = __importDefault(require("./Veiculo"));
+const TipoVeiculo_1 = require("./TipoVeiculo");
 class Carro extends Veiculo_1.default {
     constructor(placa, modelo, cor) {
         super(placa, modelo, cor);
+    }
+    getTipo() {
+        return TipoVeiculo_1.TipoVeiculo.CARRO;
     }
 }
 exports.default = Carro;
