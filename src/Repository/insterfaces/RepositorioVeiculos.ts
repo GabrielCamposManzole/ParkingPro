@@ -6,7 +6,7 @@ export interface IRepositorioVeiculos {
     salvarVeiculoEstacionado(veiculo: Veiculo): void;
     listarVeiculosEstacionados(): Veiculo[];
     salvarVeiculoCadastrado(veiculo: Veiculo): void;
-    listarTodosCadastrados(): Veiculo[]; // NOVO
+    listarTodosCadastrados(): Veiculo[]; 
 
     buscarVeiculosPorCpfCliente(cpf: string): Veiculo[];
 }

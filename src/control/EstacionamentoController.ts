@@ -1,42 +1,44 @@
-import { IEstacionamentoService } from "../Repository/insterfaces/IEstacionamentoService";
-import { IRepositorioClientes } from "../Repository/insterfaces/IRepositorioClientes";
-import { IRepositorioVagas } from "../Repository/insterfaces/IRepositorioVagas";
-import { IRepositorioVeiculos } from "../Repository/insterfaces/RepositorioVeiculos";
+import Database from "../db/Database";
+import EstacionarVeiculoService from "../service/EstacionarVeiculoService";
 import EstacionarVeiculoView from "../view/EstacionarVeiculoView";
 import Cadastro from "../view/Cadastro";
+import TerminalView from "../view/TerminalView";
 import Cliente from "../model/Cliente";
+import Veiculo from "../model/Veiculo";
+import { ClientType } from "../model/ClientType";
+import { TipoVeiculo } from "../model/TipoVeiculo";
 import Carro from "../model/Carro";
 import Moto from "../model/Moto";
 import Caminhao from "../model/Caminhao";
-import Veiculo from "../model/Veiculo";
 import Vaga from "../model/Vaga";
-import { ClientType } from "../model/ClientType";
-import { TipoVeiculo } from "../model/TipoVeiculo";
 
+// Este Controller agora é o "Composition Root" da aplicação.
 export default class EstacionamentoController {
 
-    private estacionarVeiculoService: IEstacionamentoService;
-    private repositorioClientes: IRepositorioClientes;
-    private repositorioVagas: IRepositorioVagas;
-    private repositorioVeiculos: IRepositorioVeiculos;
+    // O controller precisa de propriedades para armazenar as instâncias que ele cria.
+    private readonly database: Database;
+    private readonly estacionarVeiculoService: EstacionarVeiculoService;
+    
+    public readonly cadastraCliente: Cadastro;
+    public readonly estacionarVeiculoView: EstacionarVeiculoView;
 
-    public estacionarVeiculoView: EstacionarVeiculoView;
-    public cadastraCliente: Cadastro;
+    // O construtor agora é responsável por criar TUDO e iniciar a aplicação.
+    constructor() {
+        // 1. Cria a dependência de dados
+        this.database = new Database();
 
-    constructor(
-        estacionarVeiculoService: IEstacionamentoService,
-        repositorioClientes: IRepositorioClientes,
-        repositorioVagas: IRepositorioVagas,
-        repositorioVeiculos: IRepositorioVeiculos
-    ) {
-        this.estacionarVeiculoService = estacionarVeiculoService;
-        this.repositorioClientes = repositorioClientes;
-        this.repositorioVagas = repositorioVagas;
-        this.repositorioVeiculos = repositorioVeiculos;
+        // 2. Cria a dependência de serviço, passando o banco de dados
+        this.estacionarVeiculoService = new EstacionarVeiculoService(this.database, this.database);
+
+        // 3. Cria as views, passando a si mesmo ('this') para elas
+        this.cadastraCliente = new Cadastro(this);
         this.estacionarVeiculoView = new EstacionarVeiculoView(this);
+        const terminalView = new TerminalView(this);
 
-        // AQUI ESTÁ A LINHA IMPORTANTE E CORRIGIDA
-        this.cadastraCliente = new Cadastro(this); 
+        // 4. Inicia a aplicação
+        console.log("Sistema de Estacionamento iniciado.");
+        terminalView.exibirMenu();
+        console.log("Sistema de Estacionamento Finalizado.");
     }
     
     // --- Métodos de Clientes ---
@@ -45,56 +47,61 @@ export default class EstacionamentoController {
         novoCliente.setNome(nome);
         novoCliente.setCpf(cpf);
         novoCliente.setTipo(tipo);
-        this.repositorioClientes.salvarCliente(novoCliente);
+        this.database.salvarCliente(novoCliente);
         return novoCliente;
     }
 
     public listarClientes(): Cliente[] {
-        return this.repositorioClientes.listarClientes();
+        return this.database.listarClientes();
     }
     
     public buscarClientePorCpf(cpf: string): Cliente | undefined {
-        return this.repositorioClientes.buscarPorCpf(cpf);
+        return this.database.buscarPorCpf(cpf);
     }
  
     public atualizarCliente(cpf: string, novosDados: { nome: string; tipo: ClientType; }): Cliente | null {
-        return this.repositorioClientes.atualizar(cpf, novosDados);
+        return this.database.atualizar(cpf, novosDados);
     }
     
     public excluirCliente(cpf: string): boolean {
-        return this.repositorioClientes.excluir(cpf);
+        return this.database.excluir(cpf);
     }
 
     // --- Métodos de Veículos ---
     public criarCarro(placa: string, modelo: string, cor: string, cliente: Cliente): Carro {
         const novoCarro = new Carro(placa, modelo, cor);
         novoCarro.setCliente(cliente);
-        this.repositorioVeiculos.salvarVeiculoCadastrado(novoCarro);
+        this.database.salvarVeiculoCadastrado(novoCarro);
         return novoCarro;
     }
 
     public criarMoto(placa: string, modelo: string, cor: string, cliente: Cliente): Moto {
         const novaMoto = new Moto(placa, modelo, cor);
         novaMoto.setCliente(cliente);
-        this.repositorioVeiculos.salvarVeiculoCadastrado(novaMoto);
+        this.database.salvarVeiculoCadastrado(novaMoto);
         return novaMoto;
     }
 
     public criarCaminhao(placa: string, modelo: string, cor: string, cliente: Cliente): Caminhao {
         const novoCaminhao = new Caminhao(placa, modelo, cor);
         novoCaminhao.setCliente(cliente);
-        this.repositorioVeiculos.salvarVeiculoCadastrado(novoCaminhao);
+        this.database.salvarVeiculoCadastrado(novoCaminhao);
         return novoCaminhao;
     }
 
-    public estacionarVeiculo(placa: string, modelo: string, cor: string, tipo: TipoVeiculo): boolean {
+    public estacionarVeiculo(dados: { placa: string, modelo: string, cor: string, tipo: TipoVeiculo, cliente?: Cliente }): boolean {
         let veiculo: Veiculo;
-        switch (tipo) {
-            case TipoVeiculo.CARRO: veiculo = new Carro(placa, modelo, cor); break;
-            case TipoVeiculo.MOTO: veiculo = new Moto(placa, modelo, cor); break;
-            case TipoVeiculo.CAMINHAO: veiculo = new Caminhao(placa, modelo, cor); break;
+        switch (dados.tipo) {
+            case TipoVeiculo.CARRO: veiculo = new Carro(dados.placa, dados.modelo, dados.cor); break;
+            case TipoVeiculo.MOTO: veiculo = new Moto(dados.placa, dados.modelo, dados.cor); break;
+            case TipoVeiculo.CAMINHAO: veiculo = new Caminhao(dados.placa, dados.modelo, dados.cor); break;
             default: return false;
         }
+
+        if (dados.cliente) {
+            veiculo.setCliente(dados.cliente);
+        }
+        
         return this.estacionarVeiculoService.estacionar(veiculo);
     }
 
@@ -103,20 +110,20 @@ export default class EstacionamentoController {
     }
 
     public buscarVeiculosPorCliente(cpf: string): Veiculo[] {
-        return this.repositorioVeiculos.buscarVeiculosPorCpfCliente(cpf);
+        return this.database.buscarVeiculosPorCpfCliente(cpf);
     }
 
     public listarTodosCadastrados(): Veiculo[] {
-        return this.repositorioVeiculos.listarTodosCadastrados();
+        return this.database.listarTodosCadastrados();
     }
     
     // --- Métodos para Dashboard e Vagas ---
     public getVagasOcupadas(): number {
-      return this.repositorioVagas.listarVagas().filter(vaga => vaga.isOcupada()).length;
+      return this.database.listarVagas().filter(vaga => vaga.isOcupada()).length;
     }
 
     public getVagasTotais(): number {
-      return this.repositorioVagas.listarVagas().length;
+      return this.database.listarVagas().length;
     }
     
     public getVagasDisponiveis(): number {
@@ -124,11 +131,11 @@ export default class EstacionamentoController {
     }
 
     public getClientesCadastrados(): number {
-      return this.repositorioClientes.listarClientes().length;
+      return this.database.listarClientes().length;
     }
 
     public getVagasPorTipo(tipo: TipoVeiculo): Vaga[] {
-      return this.repositorioVagas.listarVagasPorTipo(tipo);
+      return this.database.listarVagasPorTipo(tipo);
     }
 
     public getVagasLivresPorTipo(tipo: TipoVeiculo): number {
@@ -145,6 +152,6 @@ export default class EstacionamentoController {
     
     // --- Métodos de Gestão ---
     public addVaga(tipo: TipoVeiculo, numero: number): boolean {
-      return this.repositorioVagas.addVaga(tipo, numero);
+      return this.database.addVaga(tipo, numero);
     }
 }

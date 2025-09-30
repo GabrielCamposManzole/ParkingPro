@@ -7,21 +7,19 @@ class EstacionarVeiculoService {
         this.repositorioVagas = repositorioVagas;
         this.repositorioVeiculos = repositorioVeiculos;
     }
-    // ALTERADO: Agora passa o objeto veículo para o método ocupar
     estacionar(veiculo) {
         const vagaLivre = this.repositorioVagas.buscarVagaLivre(veiculo.getTipo());
         if (vagaLivre) {
-            vagaLivre.ocupar(veiculo); // Vincula o veículo à vaga
+            vagaLivre.ocupar(veiculo);
             this.repositorioVeiculos.salvarVeiculoEstacionado(veiculo);
             return true;
         }
         return false;
     }
-    // ALTERADO: Agora encontra a vaga e a desocupa
     remover(placa) {
         const vagaOcupada = this.repositorioVagas.buscarVagaPorPlaca(placa);
         if (vagaOcupada) {
-            vagaOcupada.desocupar(); // Desvincula o veículo da vaga
+            vagaOcupada.desocupar();
             return this.repositorioVeiculos.removerVeiculoPorPlaca(placa);
         }
         return false;

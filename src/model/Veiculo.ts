@@ -38,6 +38,5 @@ export default abstract class Veiculo {
       return this.cliente;
   }
   
-  // Novo método abstrato para obter o tipo do veículo
   public abstract getTipo(): TipoVeiculo;
 }

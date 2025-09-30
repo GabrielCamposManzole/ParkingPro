@@ -5,13 +5,13 @@ export default class Vaga {
     private numero: number;
     private ocupada: boolean;
     private tipoVaga: TipoVeiculo;
-    private veiculoEstacionado: Veiculo | null; // NOVO: Armazena o veículo na vaga
+    private veiculoEstacionado: Veiculo | null; 
 
     constructor(numero: number, tipoVaga: TipoVeiculo) {
         this.numero = numero;
         this.ocupada = false;
         this.tipoVaga = tipoVaga;
-        this.veiculoEstacionado = null; // NOVO: Inicia como nulo
+        this.veiculoEstacionado = null; 
     }
 
     public getNumero(): number {
@@ -22,13 +22,13 @@ export default class Vaga {
         return this.ocupada;
     }
 
-    // ALTERADO: Agora recebe o veículo que está ocupando
+
     public ocupar(veiculo: Veiculo): void {
         this.ocupada = true;
         this.veiculoEstacionado = veiculo;
     }
 
-    // ALTERADO: Limpa a referência ao veículo
+
     public desocupar(): void {
         this.ocupada = false;
         this.veiculoEstacionado = null;
@@ -38,7 +38,6 @@ export default class Vaga {
         return this.tipoVaga;
     }
 
-    // NOVO: Permite ver qual veículo está na vaga
     public getVeiculoEstacionado(): Veiculo | null {
         return this.veiculoEstacionado;
     }

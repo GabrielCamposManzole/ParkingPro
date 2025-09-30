@@ -25,7 +25,7 @@ class Database {
         for (let i = 24; i <= 28; i++)
             this.vagasCaminhao.push(new Vaga_1.default(i, TipoVeiculo_1.TipoVeiculo.CAMINHAO));
     }
-    // --- Implementação IRepositorioVagas ---
+    // Implementando IRepositorioVagas 
     buscarVagaLivre(tipo) {
         return this.listarVagasPorTipo(tipo).find(v => !v.isOcupada());
     }
@@ -43,7 +43,7 @@ class Database {
     addVaga(tipo, numero) {
         const vagaExistente = this.listarVagas().find(v => v.getNumero() === numero);
         if (vagaExistente) {
-            return false; // Vaga já existe
+            return false;
         }
         const novaVaga = new Vaga_1.default(numero, tipo);
         switch (tipo) {
@@ -62,7 +62,6 @@ class Database {
     buscarVagaPorPlaca(placa) {
         return this.listarVagas().find(vaga => vaga.getVeiculoEstacionado()?.getPlaca() === placa);
     }
-    // --- Implementação IRepositorioVeiculos ---
     buscarVeiculoPorPlaca(placa) {
         return this.veiculosEstacionados.find(v => v.getPlaca() === placa);
     }
@@ -94,7 +93,6 @@ class Database {
     buscarVeiculosPorCpfCliente(cpf) {
         return this.listarTodosCadastrados().filter(veiculo => veiculo.getCliente()?.getCpf() === cpf);
     }
-    // --- Implementação IRepositorioClientes ---
     salvarCliente(cliente) {
         this.clienteDB.push(cliente);
     }

@@ -4,7 +4,7 @@ import Cadastro from "./Cadastro";
 import EstacionarVeiculoView from "./EstacionarVeiculoView";
 import { ClientType } from "../model/ClientType";
 import { TipoVeiculo } from "../model/TipoVeiculo";
-import Veiculo from "../model/Veiculo";
+
 
 export default class TerminalView {
   private prompt: PromptSync.Prompt;
@@ -35,7 +35,7 @@ export default class TerminalView {
 
       switch (escolha) {
         case "1": this.exibirDashboard(); break;
-        case "2": this.menuClientes(); break; // CORRETO: Chama o método desta própria classe
+        case "2": this.menuClientes(); break;
         case "3": this.menuVeiculos(); break;
         case "4": this.exibirStatusVagas(); break;
         case "5": this.menuGestao(); break;
@@ -45,7 +45,6 @@ export default class TerminalView {
     }
   }
 
-  // MÉTODO QUE ESTAVA FALTANDO
   private menuClientes(): void {
     let subMenuContinues: boolean = true;
     while (subMenuContinues) {
@@ -74,7 +73,7 @@ export default class TerminalView {
     while (subMenuContinues) {
       console.log("\n--- Menu de Veículos ---");
       console.log("1. Cadastrar Veículo para Cliente");
-      console.log("2. Estacionar Veículo (Avulso)");
+      console.log("2. Estacionar Veículo");
       console.log("3. Listar Veículos ESTACIONADOS");
       console.log("4. Listar TODOS os Veículos cadastrados");
       console.log("5. Remover Veículo do Estacionamento");
@@ -84,7 +83,7 @@ export default class TerminalView {
         case "1": this.cadastroView.cadastrarVeiculo(); break;
         case "2": this.estacionarView.estacionarVeiculo(); break;
         case "3": this.exibirVeiculosEstacionados(); break;
-        case "4": this.exibirTodosVeiculosCadastrados(); break;
+        case "4": this.exibirTodosCadastrados(); break;
         case "5": this.estacionarView.removerVeiculo(); break;
         case "6": subMenuContinues = false; break;
         default: console.log("Opção inválida.");
@@ -228,7 +227,7 @@ export default class TerminalView {
     }
   }
 
-  private exibirTodosVeiculosCadastrados(): void {
+  private exibirTodosCadastrados(): void {
     const veiculos = this.controller.listarTodosCadastrados();
     console.log("\n--- Todos os Veículos Cadastrados no Sistema ---");
     if (veiculos.length === 0) {

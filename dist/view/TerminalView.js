@@ -37,7 +37,7 @@ class TerminalView {
                     break;
                 case "2":
                     this.menuClientes();
-                    break; // CORRETO: Chama o método desta própria classe
+                    break;
                 case "3":
                     this.menuVeiculos();
                     break;
@@ -55,7 +55,6 @@ class TerminalView {
             }
         }
     }
-    // MÉTODO QUE ESTAVA FALTANDO
     menuClientes() {
         let subMenuContinues = true;
         while (subMenuContinues) {
@@ -95,7 +94,7 @@ class TerminalView {
         while (subMenuContinues) {
             console.log("\n--- Menu de Veículos ---");
             console.log("1. Cadastrar Veículo para Cliente");
-            console.log("2. Estacionar Veículo (Avulso)");
+            console.log("2. Estacionar Veículo");
             console.log("3. Listar Veículos ESTACIONADOS");
             console.log("4. Listar TODOS os Veículos cadastrados");
             console.log("5. Remover Veículo do Estacionamento");
@@ -112,7 +111,7 @@ class TerminalView {
                     this.exibirVeiculosEstacionados();
                     break;
                 case "4":
-                    this.exibirTodosVeiculosCadastrados();
+                    this.exibirTodosCadastrados();
                     break;
                 case "5":
                     this.estacionarView.removerVeiculo();
@@ -257,7 +256,7 @@ class TerminalView {
             });
         }
     }
-    exibirTodosVeiculosCadastrados() {
+    exibirTodosCadastrados() {
         const veiculos = this.controller.listarTodosCadastrados();
         console.log("\n--- Todos os Veículos Cadastrados no Sistema ---");
         if (veiculos.length === 0) {

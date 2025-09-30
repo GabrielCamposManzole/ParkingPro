@@ -29,7 +29,7 @@ export default class Database implements IRepositorioVagas, IRepositorioVeiculos
      for (let i = 24; i <= 28; i++) this.vagasCaminhao.push(new Vaga(i, TipoVeiculo.CAMINHAO));
    }
    
-   // --- Implementação IRepositorioVagas ---
+   // Implementando IRepositorioVagas 
    public buscarVagaLivre(tipo: TipoVeiculo): Vaga | undefined {
         return this.listarVagasPorTipo(tipo).find(v => !v.isOcupada());
    }
@@ -50,7 +50,7 @@ export default class Database implements IRepositorioVagas, IRepositorioVeiculos
    public addVaga(tipo: TipoVeiculo, numero: number): boolean {
     const vagaExistente = this.listarVagas().find(v => v.getNumero() === numero);
     if (vagaExistente) {
-        return false; // Vaga já existe
+        return false; 
     }
     const novaVaga = new Vaga(numero, tipo);
     switch (tipo) {
@@ -65,7 +65,6 @@ export default class Database implements IRepositorioVagas, IRepositorioVeiculos
     return this.listarVagas().find(vaga => vaga.getVeiculoEstacionado()?.getPlaca() === placa);
   }
 
-   // --- Implementação IRepositorioVeiculos ---
    public buscarVeiculoPorPlaca(placa: string): Veiculo | undefined {
         return this.veiculosEstacionados.find(v => v.getPlaca() === placa);
    }
@@ -101,7 +100,6 @@ export default class Database implements IRepositorioVagas, IRepositorioVeiculos
     return this.listarTodosCadastrados().filter(veiculo => veiculo.getCliente()?.getCpf() === cpf);
    }
 
-   // --- Implementação IRepositorioClientes ---
    public salvarCliente(cliente: Cliente): void {
        this.clienteDB.push(cliente);
    }

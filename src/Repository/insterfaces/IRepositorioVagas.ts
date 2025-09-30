@@ -7,5 +7,5 @@ export interface IRepositorioVagas {
     listarVagasPorTipo(tipo: TipoVeiculo): Vaga[];
     addVaga(tipo: TipoVeiculo, numero: number): boolean;
     listarVagas(): Vaga[];
-    buscarVagaPorPlaca(placa: string): Vaga | undefined; // NOVO
+    buscarVagaPorPlaca(placa: string): Vaga | undefined; 
 }
