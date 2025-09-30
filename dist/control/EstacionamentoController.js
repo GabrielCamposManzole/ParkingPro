@@ -3,54 +3,67 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const EstacionarVeiculoService_1 = __importDefault(require("../service/EstacionarVeiculoService"));
 const EstacionarVeiculoView_1 = __importDefault(require("../view/EstacionarVeiculoView"));
 const Cadastro_1 = __importDefault(require("../view/Cadastro"));
-const TerminalView_1 = __importDefault(require("../view/TerminalView"));
 const Cliente_1 = __importDefault(require("../model/Cliente"));
 const Carro_1 = __importDefault(require("../model/Carro"));
 const Moto_1 = __importDefault(require("../model/Moto"));
 const Caminhao_1 = __importDefault(require("../model/Caminhao"));
-const Database_1 = __importDefault(require("../db/Database"));
 const TipoVeiculo_1 = require("../model/TipoVeiculo");
-const Vaga_1 = __importDefault(require("../model/Vaga"));
 class EstacionamentoController {
-    database = new Database_1.default();
     estacionarVeiculoService;
+    repositorioClientes;
+    repositorioVagas;
+    repositorioVeiculos;
     estacionarVeiculoView;
-    cadastraCliente = new Cadastro_1.default(this);
-    terminalView;
-    constructor() {
-        this.estacionarVeiculoService = new EstacionarVeiculoService_1.default();
+    cadastraCliente;
+    constructor(estacionarVeiculoService, repositorioClientes, repositorioVagas, repositorioVeiculos) {
+        this.estacionarVeiculoService = estacionarVeiculoService;
+        this.repositorioClientes = repositorioClientes;
+        this.repositorioVagas = repositorioVagas;
+        this.repositorioVeiculos = repositorioVeiculos;
         this.estacionarVeiculoView = new EstacionarVeiculoView_1.default(this);
-        this.terminalView = new TerminalView_1.default(this);
+        // AQUI ESTÁ A LINHA IMPORTANTE E CORRIGIDA
+        this.cadastraCliente = new Cadastro_1.default(this);
     }
-    // Método para criar e retornar uma nova instância de Cliente
+    // --- Métodos de Clientes ---
     criarCliente(nome, cpf, tipo) {
         const novoCliente = new Cliente_1.default();
         novoCliente.setNome(nome);
         novoCliente.setCpf(cpf);
         novoCliente.setTipo(tipo);
-        this.database.clienteDB.push(novoCliente);
+        this.repositorioClientes.salvarCliente(novoCliente);
         return novoCliente;
     }
-    // Métodos para criar instâncias de veículos e armazená-los no banco de dados
+    listarClientes() {
+        return this.repositorioClientes.listarClientes();
+    }
+    buscarClientePorCpf(cpf) {
+        return this.repositorioClientes.buscarPorCpf(cpf);
+    }
+    atualizarCliente(cpf, novosDados) {
+        return this.repositorioClientes.atualizar(cpf, novosDados);
+    }
+    excluirCliente(cpf) {
+        return this.repositorioClientes.excluir(cpf);
+    }
+    // --- Métodos de Veículos ---
     criarCarro(placa, modelo, cor, cliente) {
         const novoCarro = new Carro_1.default(placa, modelo, cor);
         novoCarro.setCliente(cliente);
-        this.database.carrosDB.push(novoCarro);
+        this.repositorioVeiculos.salvarVeiculoCadastrado(novoCarro);
         return novoCarro;
     }
     criarMoto(placa, modelo, cor, cliente) {
         const novaMoto = new Moto_1.default(placa, modelo, cor);
         novaMoto.setCliente(cliente);
-        this.database.motosDB.push(novaMoto);
+        this.repositorioVeiculos.salvarVeiculoCadastrado(novaMoto);
         return novaMoto;
     }
     criarCaminhao(placa, modelo, cor, cliente) {
         const novoCaminhao = new Caminhao_1.default(placa, modelo, cor);
         novoCaminhao.setCliente(cliente);
-        this.database.caminhoesDB.push(novoCaminhao);
+        this.repositorioVeiculos.salvarVeiculoCadastrado(novoCaminhao);
         return novoCaminhao;
     }
     estacionarVeiculo(placa, modelo, cor, tipo) {
@@ -65,66 +78,47 @@ class EstacionamentoController {
             case TipoVeiculo_1.TipoVeiculo.CAMINHAO:
                 veiculo = new Caminhao_1.default(placa, modelo, cor);
                 break;
-            default:
-                return false;
+            default: return false;
         }
-        return this.estacionarVeiculoService.estacionarVeiculo(veiculo);
+        return this.estacionarVeiculoService.estacionar(veiculo);
     }
     removerVeiculo(placa) {
-        return this.estacionarVeiculoService.removerVeiculo(placa);
+        return this.estacionarVeiculoService.remover(placa);
     }
-    listarClientes() {
-        return this.database.clienteDB;
+    buscarVeiculosPorCliente(cpf) {
+        return this.repositorioVeiculos.buscarVeiculosPorCpfCliente(cpf);
     }
-    // Novos métodos para o Dashboard
+    listarTodosCadastrados() {
+        return this.repositorioVeiculos.listarTodosCadastrados();
+    }
+    // --- Métodos para Dashboard e Vagas ---
     getVagasOcupadas() {
-        const vagasOcupadasCarro = this.database.vagasCarro.filter(vaga => vaga.isOcupada()).length;
-        const vagasOcupadasMoto = this.database.vagasMoto.filter(vaga => vaga.isOcupada()).length;
-        const vagasOcupadasCaminhao = this.database.vagasCaminhao.filter(vaga => vaga.isOcupada()).length;
-        return vagasOcupadasCarro + vagasOcupadasMoto + vagasOcupadasCaminhao;
+        return this.repositorioVagas.listarVagas().filter(vaga => vaga.isOcupada()).length;
     }
     getVagasTotais() {
-        return this.database.vagasCarro.length + this.database.vagasMoto.length + this.database.vagasCaminhao.length;
+        return this.repositorioVagas.listarVagas().length;
+    }
+    getVagasDisponiveis() {
+        return this.estacionarVeiculoService.vagasDisponiveis();
     }
     getClientesCadastrados() {
-        return this.database.clienteDB.length;
+        return this.repositorioClientes.listarClientes().length;
     }
     getVagasPorTipo(tipo) {
-        switch (tipo) {
-            case TipoVeiculo_1.TipoVeiculo.CARRO:
-                return this.database.vagasCarro;
-            case TipoVeiculo_1.TipoVeiculo.MOTO:
-                return this.database.vagasMoto;
-            case TipoVeiculo_1.TipoVeiculo.CAMINHAO:
-                return this.database.vagasCaminhao;
-            default:
-                return [];
-        }
+        return this.repositorioVagas.listarVagasPorTipo(tipo);
     }
     getVagasLivresPorTipo(tipo) {
-        const vagas = this.getVagasPorTipo(tipo);
-        return vagas.filter(vaga => !vaga.isOcupada()).length;
+        return this.getVagasPorTipo(tipo).filter(vaga => !vaga.isOcupada()).length;
     }
     getVagasOcupadasPorTipo(tipo) {
-        const vagas = this.getVagasPorTipo(tipo);
-        return vagas.filter(vaga => vaga.isOcupada()).length;
+        return this.getVagasPorTipo(tipo).filter(vaga => vaga.isOcupada()).length;
     }
-    // Novos métodos para Gestão
+    listarVeiculosEstacionados() {
+        return this.estacionarVeiculoService.listarVeiculosEstacionados();
+    }
+    // --- Métodos de Gestão ---
     addVaga(tipo, numero) {
-        const novaVaga = new Vaga_1.default(numero, tipo);
-        switch (tipo) {
-            case TipoVeiculo_1.TipoVeiculo.CARRO:
-                this.database.vagasCarro.push(novaVaga);
-                return true;
-            case TipoVeiculo_1.TipoVeiculo.MOTO:
-                this.database.vagasMoto.push(novaVaga);
-                return true;
-            case TipoVeiculo_1.TipoVeiculo.CAMINHAO:
-                this.database.vagasCaminhao.push(novaVaga);
-                return true;
-            default:
-                return false;
-        }
+        return this.repositorioVagas.addVaga(tipo, numero);
     }
 }
 exports.default = EstacionamentoController;

@@ -31,7 +31,7 @@ class Cadastro {
     }
     cadastrarVeiculo() {
         console.log("\n=== Cadastro de Veículo ===");
-        const clientes = this.controller.database.clienteDB;
+        const clientes = this.controller.listarClientes();
         if (clientes.length === 0) {
             console.log("Não há clientes cadastrados. Por favor, cadastre um cliente primeiro.");
             return;

@@ -1,41 +1,36 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class EstacionarVeiculoService {
-    veiculosEstacionados = [];
-    limiteVagas;
-    constructor(limiteVagas = 100) {
-        this.limiteVagas = limiteVagas;
+    repositorioVagas;
+    repositorioVeiculos;
+    constructor(repositorioVagas, repositorioVeiculos) {
+        this.repositorioVagas = repositorioVagas;
+        this.repositorioVeiculos = repositorioVeiculos;
     }
-    estacionarVeiculo(veiculo) {
-        if (this.veiculosEstacionados.length < this.limiteVagas) {
-            this.veiculosEstacionados.push(veiculo);
+    // ALTERADO: Agora passa o objeto veículo para o método ocupar
+    estacionar(veiculo) {
+        const vagaLivre = this.repositorioVagas.buscarVagaLivre(veiculo.getTipo());
+        if (vagaLivre) {
+            vagaLivre.ocupar(veiculo); // Vincula o veículo à vaga
+            this.repositorioVeiculos.salvarVeiculoEstacionado(veiculo);
             return true;
         }
-        else {
-            return false;
-        }
+        return false;
     }
-    removerVeiculo(placa) {
-        const index = this.veiculosEstacionados.findIndex(v => v.getPlaca() === placa);
-        if (index !== -1) {
-            this.veiculosEstacionados.splice(index, 1);
-            return true;
+    // ALTERADO: Agora encontra a vaga e a desocupa
+    remover(placa) {
+        const vagaOcupada = this.repositorioVagas.buscarVagaPorPlaca(placa);
+        if (vagaOcupada) {
+            vagaOcupada.desocupar(); // Desvincula o veículo da vaga
+            return this.repositorioVeiculos.removerVeiculoPorPlaca(placa);
         }
-        else {
-            return false;
-        }
+        return false;
     }
     listarVeiculosEstacionados() {
-        return this.veiculosEstacionados;
+        return this.repositorioVeiculos.listarVeiculosEstacionados();
     }
     vagasDisponiveis() {
-        return this.limiteVagas - this.veiculosEstacionados.length;
-    }
-    getLimiteVagas() {
-        return this.limiteVagas;
-    }
-    setLimiteVagas(limite) {
-        this.limiteVagas = limite;
+        return this.repositorioVagas.listarVagas().filter(vaga => !vaga.isOcupada()).length;
     }
 }
 exports.default = EstacionarVeiculoService;
