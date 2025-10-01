@@ -31,10 +31,9 @@ export default class Cadastro {
             console.log("\nCliente cadastrado com sucesso!");
             console.log(`Nome: ${novoCliente.getNome()}`);
             console.log(`CPF: ${novoCliente.getCpf()}`);
-            console.log(`Tipo: ${ClientType[novoCliente.getTipo()]}`); // Melhorado para mostrar o nome do tipo
+            console.log(`Tipo: ${ClientType[novoCliente.getTipo()]}`); 
       }
        
-      // MÉTODO MODIFICADO para buscar cliente por CPF
       public cadastrarVeiculo(): void {
             console.log("\n=== Cadastro de Veículo para Cliente ===");
 
@@ -46,7 +45,6 @@ export default class Cadastro {
             const cpf = this.prompt("Digite o CPF do cliente proprietário do veículo: ");
             const clienteSelecionado = this.controller.buscarClientePorCpf(cpf);
 
-            // Valida se o cliente foi encontrado
             if (!clienteSelecionado) {
                 console.log(`\nErro: Nenhum cliente encontrado com o CPF '${cpf}'. Operação cancelada.`);
                 return;
@@ -54,7 +52,6 @@ export default class Cadastro {
 
             console.log(`Cliente encontrado: ${clienteSelecionado.getNome()}`);
             
-            // Permite cadastrar vários carros em sequência para o mesmo cliente
             let continuarCadastrando = true;
             while (continuarCadastrando) {
                 console.log("\n-- Adicionando novo veículo --");
@@ -63,7 +60,7 @@ export default class Cadastro {
 
                 if (!Object.values(TipoVeiculo).includes(categoria)) {
                     console.log("Categoria inválida. Tente novamente.");
-                    continue; // Pula para a próxima iteração do loop
+                    continue; 
                 }
 
                 const placa = this.prompt("Placa do veículo: ");

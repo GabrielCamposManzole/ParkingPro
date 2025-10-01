@@ -3,26 +3,26 @@ import { IRepositorioVagas } from "../Repository/insterfaces/IRepositorioVagas";
 import { IRepositorioVeiculos } from "../Repository/insterfaces/RepositorioVeiculos";
 import { IEstacionamentoService } from "../Repository/insterfaces/IEstacionamentoService";
 
+/**
+ * Implementa a lógica de negócio para estacionar e remover veículos.
+ */
 export default class EstacionarVeiculoService implements IEstacionamentoService {
     
-    private repositorioVagas: IRepositorioVagas;
-    private repositorioVeiculos: IRepositorioVeiculos;
-
+    // Injeção de Dependência via construtor.
     constructor(
-        repositorioVagas: IRepositorioVagas, 
-        repositorioVeiculos: IRepositorioVeiculos
-    ) {
-        this.repositorioVagas = repositorioVagas;
-        this.repositorioVeiculos = repositorioVeiculos;
-    }
+        private readonly repositorioVagas: IRepositorioVagas, 
+        private readonly repositorioVeiculos: IRepositorioVeiculos
+    ) {}
 
     public estacionar(veiculo: Veiculo): boolean {
         const vagaLivre = this.repositorioVagas.buscarVagaLivre(veiculo.getTipo());
         if (vagaLivre) {
             vagaLivre.ocupar(veiculo); 
             this.repositorioVeiculos.salvarVeiculoEstacionado(veiculo);
+            console.log(`Veículo ${veiculo.getPlaca()} estacionado na vaga ${vagaLivre.getNumero()}.`);
             return true;
         }
+        console.log(`Não há vagas disponíveis para ${veiculo.getTipo()}.`);
         return false;
     }
 
@@ -31,8 +31,10 @@ export default class EstacionarVeiculoService implements IEstacionamentoService 
         
         if (vagaOcupada) {
             vagaOcupada.desocupar(); 
+            console.log(`Veículo ${placa} removido da vaga ${vagaOcupada.getNumero()}.`);
             return this.repositorioVeiculos.removerVeiculoPorPlaca(placa);
         }
+        console.log(`Veículo com placa ${placa} não encontrado.`);
         return false;
     }
     

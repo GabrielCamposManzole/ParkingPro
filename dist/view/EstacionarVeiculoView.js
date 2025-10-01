@@ -16,9 +16,6 @@ class EstacionarVeiculoView {
         console.log("\n=== Estacionar Veículo ===");
         const cliente = this.selecionarCliente();
         const dadosVeiculo = this.obterDadosVeiculo();
-        // AQUI ESTÁ A LINHA CORRIGIDA
-        // Esta sintaxe garante que a propriedade 'cliente' só é adicionada
-        // ao objeto se a variável 'cliente' não for undefined.
         const sucesso = this.controller.estacionarVeiculo({
             ...dadosVeiculo,
             ...(cliente && { cliente: cliente })
