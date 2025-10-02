@@ -65,16 +65,16 @@ export default class ClienteView {
 
         // Validação simples da entrada do tipo de cliente
         if (isNaN(tipo) || !Object.values(ClientType).includes(tipo)) {
-            console.log("\n❌ Tipo de cliente inválido. Operação cancelada.");
+            console.log("\n Tipo de cliente inválido. Operação cancelada.");
             return;
         }
 
         try {
             // A View chama o método do Controller DIRETAMENTE
             const novoCliente = this.controller.criarCliente(nome, cpf, tipo as ClientType);
-            console.log(`\n✅ Cliente '${novoCliente.getNome()}' cadastrado com sucesso!`);
+            console.log(`\n Cliente '${novoCliente.getNome()}' cadastrado com sucesso!`);
         } catch (error: any) {
-            console.log(`\n❌ Erro ao cadastrar cliente: ${error.message}`);
+            console.log(`\n Erro ao cadastrar cliente: ${error.message}`);
         }
     }
 
@@ -109,7 +109,7 @@ export default class ClienteView {
             console.log(`CPF: ${cliente.getCpf()}`);
             console.log(`Tipo: ${ClientType[cliente.getTipo()]}`);
         } else {
-            console.log("\n❌ Cliente não encontrado.");
+            console.log("\n Cliente não encontrado.");
         }
     }
 
@@ -122,7 +122,7 @@ export default class ClienteView {
         
         // Primeiro, verifica se o cliente existe
         if (!this.controller.buscarClientePorCpf(cpf)) {
-            console.log("\n❌ Cliente não encontrado. Operação cancelada.");
+            console.log("\n Cliente não encontrado. Operação cancelada.");
             return;
         }
 
@@ -133,10 +133,10 @@ export default class ClienteView {
         try {
             const clienteAtualizado = this.controller.atualizarCliente(cpf, { nome: novoNome, tipo: novoTipo });
             if (clienteAtualizado) {
-                console.log(`\n✅ Cliente '${clienteAtualizado.getNome()}' atualizado com sucesso!`);
+                console.log(`\n Cliente '${clienteAtualizado.getNome()}' atualizado com sucesso!`);
             }
         } catch (error: any) {
-            console.log(`\n❌ Erro ao atualizar cliente: ${error.message}`);
+            console.log(`\n Erro ao atualizar cliente: ${error.message}`);
         }
     }
 
@@ -152,9 +152,9 @@ export default class ClienteView {
         if (confirmacao === 's') {
             const sucesso = this.controller.excluirCliente(cpf);
             if (sucesso) {
-                console.log("\n✅ Cliente excluído com sucesso!");
+                console.log("\n Cliente excluído com sucesso!");
             } else {
-                console.log("\n❌ Cliente não encontrado ou não pôde ser excluído.");
+                console.log("\n Cliente não encontrado ou não pôde ser excluído.");
             }
         } else {
             console.log("\nOperação cancelada.");

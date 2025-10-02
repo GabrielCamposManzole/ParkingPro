@@ -14,10 +14,10 @@ import Vaga from "../model/Vaga";
 export default class EstacionamentoController {
     
     constructor(
-        private readonly estacionamentoService: IEstacionamentoService,
-        private readonly clienteService: IClienteService,
-        private readonly veiculoService: IVeiculoService,
-        private readonly vagaService: IVagaService
+        private estacionamentoService: IEstacionamentoService,
+        private  clienteService: IClienteService,
+        private  veiculoService: IVeiculoService,
+        private  vagaService: IVagaService
     ) {}
     
     // --- Métodos de Clientes (delegam para ClienteService) ---

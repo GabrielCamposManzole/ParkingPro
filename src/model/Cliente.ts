@@ -27,7 +27,7 @@ export default class Cliente {
         return this.cpf;
     }
 
-    public getTipo(): number {
+    public getTipo(): ClientType {
         return this.tipo;
     }
 

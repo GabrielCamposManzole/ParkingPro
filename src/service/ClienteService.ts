@@ -11,7 +11,7 @@ export default class ClienteService implements IClienteService {
     
     // Injeção de Dependência via construtor.
     // O 'private readonly' é um atalho do TypeScript para declarar e atribuir a propriedade.
-    constructor(private readonly repositorioClientes: IRepositorioClientes) {}
+    constructor(private  repositorioClientes: IRepositorioClientes) {}
 
     public criarCliente(nome: string, cpf: string, tipo: ClientType): Cliente {
         if (!nome || !cpf) {

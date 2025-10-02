@@ -150,7 +150,7 @@ class TerminalView {
         const ocupadasCarro = this.controller.getVagasOcupadasPorTipo(TipoVeiculo_1.TipoVeiculo.CARRO);
         const ocupadasMoto = this.controller.getVagasOcupadasPorTipo(TipoVeiculo_1.TipoVeiculo.MOTO);
         const ocupadasCaminhao = this.controller.getVagasOcupadasPorTipo(TipoVeiculo_1.TipoVeiculo.CAMINHAO);
-        console.log(`- Ocupação por Tipo: 🚗 Carro: ${ocupadasCarro} | 🏍️ Moto: ${ocupadasMoto} | 🚚 Caminhão: ${ocupadasCaminhao}`);
+        console.log(`- Ocupação por Tipo:  Carro: ${ocupadasCarro} |  Moto: ${ocupadasMoto} |  Caminhão: ${ocupadasCaminhao}`);
         console.log(`Clientes Cadastrados: ${this.controller.getClientesCadastrados()}`);
         console.log(`Veículos Estacionados: ${this.controller.listarVeiculosEstacionados().length}`);
         console.log("=========================================");
@@ -273,10 +273,6 @@ class TerminalView {
         console.log("\n--- Adicionar Nova Vaga ---");
         const numeroInput = this.prompt("Digite o número da nova vaga: ");
         const numero = parseInt(numeroInput);
-        if (isNaN(numero) || numero <= 0) {
-            console.log("Número de vaga inválido.");
-            return;
-        }
         const tipoInput = this.prompt("Digite o tipo da vaga (carro, moto, caminhao): ").toLowerCase();
         if (!Object.values(TipoVeiculo_1.TipoVeiculo).includes(tipoInput)) {
             console.log("Tipo de vaga inválido.");
