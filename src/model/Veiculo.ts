@@ -16,6 +16,7 @@ export default abstract class Veiculo {
   public getPlaca(): string {
     return this.placa;
   }
+  
   public getModelo(): string {
     return this.modelo;
   }
