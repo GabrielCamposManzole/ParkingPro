@@ -112,11 +112,11 @@ export default class Database implements IRepositorioVagas, IRepositorioVeiculos
     return this.clienteDB.find(cliente => cliente.getCpf() === cpf);
    }
 
-   public atualizar(cpf: string, novosDados: { nome: string; tipo: ClientType; }): Cliente | null {
+   public atualizar(cpf: string, novosDados: { nome?: string; tipo?: ClientType; }): Cliente | null {
     const cliente = this.buscarPorCpf(cpf);
     if (cliente) {
-        cliente.setNome(novosDados.nome);
-        cliente.setTipo(novosDados.tipo);
+        if (novosDados.nome) cliente.setNome(novosDados.nome);
+        if (novosDados.tipo) cliente.setTipo(novosDados.tipo);
         return cliente;
     }
     return null;

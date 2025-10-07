@@ -23,11 +23,18 @@ class Cadastro {
             tipoInput = this.prompt("Tipo inválido. Digite 1, 2 ou 3: ");
             tipo = parseInt(tipoInput);
         }
+        let valorMensal = null;
+        if (tipo === ClientType_1.ClientType.MENSALISTA) {
+            valorMensal = this.prompt("Valor Mensal a ser cobrado: ");
+        }
         const novoCliente = this.controller.criarCliente(nome, cpf, tipo);
         console.log("\nCliente cadastrado com sucesso!");
         console.log(`Nome: ${novoCliente.getNome()}`);
         console.log(`CPF: ${novoCliente.getCpf()}`);
         console.log(`Tipo: ${ClientType_1.ClientType[novoCliente.getTipo()]}`);
+        if (valorMensal) {
+            console.log(`Valor Mensal: R$${valorMensal}`);
+        }
     }
     cadastrarVeiculo() {
         console.log("\n=== Cadastro de Veículo para Cliente ===");

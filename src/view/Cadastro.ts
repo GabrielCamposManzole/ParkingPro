@@ -26,12 +26,20 @@ export default class Cadastro {
                   tipo = parseInt(tipoInput);
             }
             
+            let valorMensal: string | null = null;
+            if (tipo === ClientType.MENSALISTA) {
+                  valorMensal = this.prompt("Valor Mensal a ser cobrado: ");
+            }
+
             const novoCliente = this.controller.criarCliente(nome, cpf, tipo as ClientType);
 
             console.log("\nCliente cadastrado com sucesso!");
             console.log(`Nome: ${novoCliente.getNome()}`);
             console.log(`CPF: ${novoCliente.getCpf()}`);
             console.log(`Tipo: ${ClientType[novoCliente.getTipo()]}`); 
+            if (valorMensal) {
+                  console.log(`Valor Mensal: R$${valorMensal}`);
+            }
       }
        
       public cadastrarVeiculo(): void {

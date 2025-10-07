@@ -105,8 +105,10 @@ class Database {
     atualizar(cpf, novosDados) {
         const cliente = this.buscarPorCpf(cpf);
         if (cliente) {
-            cliente.setNome(novosDados.nome);
-            cliente.setTipo(novosDados.tipo);
+            if (novosDados.nome)
+                cliente.setNome(novosDados.nome);
+            if (novosDados.tipo)
+                cliente.setTipo(novosDados.tipo);
             return cliente;
         }
         return null;
