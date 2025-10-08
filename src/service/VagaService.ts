@@ -26,4 +26,6 @@ export default class VagaService implements IVagaService {
     addVaga(tipo: TipoVeiculo, numero: number): boolean {
         return this.repositorioVagas.addVaga(tipo, numero);
     }
+
+    
 }

@@ -23,7 +23,8 @@ class ClienteView {
             console.log("2. Listar todos os clientes");
             console.log("3. Buscar cliente por CPF");
             console.log("4. Atualizar cliente");
-            console.log("5. Excluir cliente");
+            console.log("5. Detalhar Cliente");
+            console.log("6. Excluir cliente");
             console.log("0. Voltar ao menu principal");
             const opcao = this.prompt("Escolha uma opção: ");
             switch (opcao) {
@@ -40,6 +41,9 @@ class ClienteView {
                     this.atualizar();
                     break;
                 case '5':
+                    this.detalharCliente();
+                    break;
+                case '6':
                     this.excluir();
                     break;
                 case '0':
@@ -146,6 +150,26 @@ class ClienteView {
         }
         else {
             console.log("\nOperação cancelada.");
+        }
+    }
+    detalharCliente() {
+        const cpf = this.prompt("Digite o CPF do cliente para ver os detalhes: ");
+        const cliente = this.controller.buscarClientePorCpf(cpf);
+        if (!cliente) {
+            console.log("Cliente não encontrado.");
+            return;
+        }
+        console.log("\n--- Detalhes do Cliente ---");
+        console.log(`Nome: ${cliente.getNome()}`);
+        console.log(`CPF: ${cliente.getCpf()}`);
+        console.log(`Tipo: ${ClientType_1.ClientType[cliente.getTipo()]}`);
+        const veiculos = this.controller.buscarVeiculosPorCliente(cliente.getCpf());
+        if (veiculos.length > 0) {
+            console.log("Veículos Cadastrados:");
+            veiculos.forEach(v => console.log(`- Placa: ${v.getPlaca()}, Modelo: ${v.getModelo()}`));
+        }
+        else {
+            console.log("Nenhum veículo cadastrado para este cliente.");
         }
     }
 }

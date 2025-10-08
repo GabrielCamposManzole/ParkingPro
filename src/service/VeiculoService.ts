@@ -8,7 +8,7 @@ import Caminhao from "../model/Caminhao";
 
 export default class VeiculoService implements IVeiculoService {
 
-    constructor(private readonly repositorioVeiculos: IRepositorioVeiculos) {}
+    constructor(private  repositorioVeiculos: IRepositorioVeiculos) {}
 
     criarCarro(placa: string, modelo: string, cor: string, cliente: Cliente): Carro {
         const novoCarro = new Carro(placa, modelo, cor);

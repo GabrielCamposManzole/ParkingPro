@@ -1,8 +1,6 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
+<<<<<<< HEAD
 const prompt_sync_1 = __importDefault(require("prompt-sync"));
 const ClientType_1 = require("../model/ClientType");
 const TipoVeiculo_1 = require("../model/TipoVeiculo");
@@ -81,3 +79,5 @@ class Cadastro {
     }
 }
 exports.default = Cadastro;
+=======
+>>>>>>> 9981941 (.)

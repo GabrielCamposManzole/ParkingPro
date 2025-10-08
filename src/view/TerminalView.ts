@@ -1,22 +1,26 @@
 import PromptSync from "prompt-sync";
 import EstacionamentoController from "../control/EstacionamentoController";
-import Cadastro from "./Cadastro";
+
 import EstacionarVeiculoView from "./EstacionarVeiculoView";
 import { ClientType } from "../model/ClientType";
 import { TipoVeiculo } from "../model/TipoVeiculo";
+import ClienteView from "./ClienteView";
 
 
 export default class TerminalView {
   private prompt: PromptSync.Prompt;
   private controller: EstacionamentoController;
-  private cadastroView: Cadastro;
+ 
   private estacionarView: EstacionarVeiculoView;
+  private clienteView: ClienteView;
+
 
   constructor(controller: EstacionamentoController) {
     this.prompt = PromptSync();
     this.controller = controller;
-    this.cadastroView = new Cadastro(this.controller);
+    
     this.estacionarView = new EstacionarVeiculoView(this.controller);
+    this.clienteView = new ClienteView(this.controller);
   }
 
   public exibirMenu(): void {
@@ -36,9 +40,15 @@ export default class TerminalView {
       switch (escolha) {
         case "1": this.exibirDashboard(); 
         break;
+<<<<<<< HEAD
         case "2": this.menuClientes(); 
         break;
         case "3": this.menuVeiculos(); 
+=======
+        case "2": this.clienteView.exibirMenuClientes(); 
+        break;
+        case "3": this.estacionarView.menuVeiculos(); 
+>>>>>>> 9981941 (.)
         break;
         case "4": this.exibirStatusVagas();
         break;
@@ -51,6 +61,7 @@ export default class TerminalView {
     }
   }
 
+<<<<<<< HEAD
   private menuClientes(): void {
     let subMenuContinues: boolean = true;
     while (subMenuContinues) {
@@ -108,6 +119,8 @@ export default class TerminalView {
       }
     }
   }
+=======
+>>>>>>> 9981941 (.)
 
   private menuGestao(): void {
     let subMenuContinues: boolean = true;
@@ -168,6 +181,7 @@ export default class TerminalView {
     } else {
       clientes.forEach((cliente, index) => {
         console.log(`${index + 1}. Nome: ${cliente.getNome()}, CPF: ${cliente.getCpf()}`);
+<<<<<<< HEAD
       });
     }
   }
@@ -243,10 +257,13 @@ export default class TerminalView {
     } else {
       veiculos.forEach((veiculo) => {
         console.log(`- Placa: ${veiculo.getPlaca()} | Modelo: ${veiculo.getModelo()} | Cor: ${veiculo.getCor()}`);
+=======
+>>>>>>> 9981941 (.)
       });
     }
   }
 
+<<<<<<< HEAD
   private exibirTodosCadastrados(): void {
     const veiculos = this.controller.listarTodosCadastrados();
     console.log("\n--- Todos os Veículos Cadastrados no Sistema ---");
@@ -259,6 +276,10 @@ export default class TerminalView {
       });
     }
   }
+=======
+  
+
+>>>>>>> 9981941 (.)
 
   private adicionarNovaVaga(): void {
     console.log("\n--- Adicionar Nova Vaga ---");

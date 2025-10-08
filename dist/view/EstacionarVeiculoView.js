@@ -12,6 +12,83 @@ class EstacionarVeiculoView {
         this.prompt = (0, prompt_sync_1.default)();
         this.controller = controller;
     }
+    menuVeiculos() {
+        let subMenuContinues = true;
+        while (subMenuContinues) {
+            console.log("\n--- Menu de Veículos ---");
+            console.log("1. Cadastrar Veículo para Cliente");
+            console.log("2. Estacionar Veículo");
+            console.log("3. Listar Veículos ESTACIONADOS");
+            console.log("4. Listar TODOS os Veículos cadastrados");
+            console.log("5. Remover Veículo do Estacionamento");
+            console.log("6. Voltar");
+            const escolha = this.prompt("Escolha uma opção: ");
+            switch (escolha) {
+                case "1":
+                    this.cadastrarVeiculo();
+                    break;
+                case "2":
+                    this.estacionarVeiculo();
+                    break;
+                case "3":
+                    this.exibirVeiculosEstacionados();
+                    break;
+                case "4":
+                    this.exibirTodosCadastrados();
+                    break;
+                case "5":
+                    this.removerVeiculo();
+                    break;
+                case "6":
+                    subMenuContinues = false;
+                    break;
+                default: console.log("Opção inválida.");
+            }
+        }
+    }
+    cadastrarVeiculo() {
+        console.log("\n=== Cadastro de Veículo para Cliente ===");
+        if (this.controller.getClientesCadastrados() === 0) {
+            console.log("Não há clientes cadastrados no sistema. Por favor, cadastre um cliente primeiro.");
+            return;
+        }
+        const cpf = this.prompt("Digite o CPF do cliente proprietário do veículo: ");
+        const clienteSelecionado = this.controller.buscarClientePorCpf(cpf);
+        if (!clienteSelecionado) {
+            console.log(`\nErro: Nenhum cliente encontrado com o CPF '${cpf}'. Operação cancelada.`);
+            return;
+        }
+        console.log(`Cliente encontrado: ${clienteSelecionado.getNome()}`);
+        let continuarCadastrando = true;
+        while (continuarCadastrando) {
+            console.log("\n-- Adicionando novo veículo --");
+            const categoriaInput = this.prompt("Categoria do veículo (carro, moto, caminhao): ").toLowerCase();
+            const categoria = categoriaInput;
+            if (!Object.values(TipoVeiculo_1.TipoVeiculo).includes(categoria)) {
+                console.log("Categoria inválida. Tente novamente.");
+                continue;
+            }
+            const placa = this.prompt("Placa do veículo: ");
+            const modelo = this.prompt("Modelo do veículo: ");
+            const cor = this.prompt("Cor do veículo: ");
+            switch (categoria) {
+                case TipoVeiculo_1.TipoVeiculo.CARRO:
+                    this.controller.criarCarro(placa, modelo, cor, clienteSelecionado);
+                    break;
+                case TipoVeiculo_1.TipoVeiculo.MOTO:
+                    this.controller.criarMoto(placa, modelo, cor, clienteSelecionado);
+                    break;
+                case TipoVeiculo_1.TipoVeiculo.CAMINHAO:
+                    this.controller.criarCaminhao(placa, modelo, cor, clienteSelecionado);
+                    break;
+            }
+            console.log(`\nVeículo de placa ${placa} cadastrado com sucesso para ${clienteSelecionado.getNome()}!`);
+            const resposta = this.prompt("Deseja cadastrar outro veículo para este mesmo cliente? (S/N): ").toUpperCase();
+            if (resposta !== 'S') {
+                continuarCadastrando = false;
+            }
+        }
+    }
     estacionarVeiculo() {
         console.log("\n=== Estacionar Veículo ===");
         const cliente = this.selecionarCliente();
@@ -76,6 +153,31 @@ class EstacionarVeiculoView {
         }
         else {
             console.log(`Veículo com placa ${placa} não encontrado.`);
+        }
+    }
+    exibirVeiculosEstacionados() {
+        const veiculos = this.controller.listarVeiculosEstacionados();
+        console.log("\n--- Veículos Estacionados Atualmente ---");
+        if (veiculos.length === 0) {
+            console.log("Nenhum veículo estacionado no momento.");
+        }
+        else {
+            veiculos.forEach((veiculo) => {
+                console.log(`- Placa: ${veiculo.getPlaca()} | Modelo: ${veiculo.getModelo()} | Cor: ${veiculo.getCor()}`);
+            });
+        }
+    }
+    exibirTodosCadastrados() {
+        const veiculos = this.controller.listarTodosCadastrados();
+        console.log("\n--- Todos os Veículos Cadastrados no Sistema ---");
+        if (veiculos.length === 0) {
+            console.log("Nenhum veículo cadastrado no sistema.");
+        }
+        else {
+            veiculos.forEach((veiculo) => {
+                const clienteNome = veiculo.getCliente() ? veiculo.getCliente().getNome() : "Sem cliente associado";
+                console.log(`- Placa: ${veiculo.getPlaca()} | Modelo: ${veiculo.getModelo()} | Proprietário: ${clienteNome}`);
+            });
         }
     }
 }

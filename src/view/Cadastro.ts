@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import PromptSync from "prompt-sync";
 import Cliente from "../model/Cliente";
 import EstacionamentoController from "../control/EstacionamentoController";
@@ -96,3 +97,5 @@ export default class Cadastro {
             }
       }
 }
+=======
+>>>>>>> 9981941 (.)
