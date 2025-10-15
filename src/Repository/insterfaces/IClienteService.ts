@@ -11,4 +11,5 @@ export interface IClienteService {
     buscarClientePorCpf(cpf: string): Cliente | undefined;
     atualizarCliente(cpf: string, novosDados: { nome: string; tipo: ClientType; }): Cliente | null;
     excluirCliente(cpf: string): boolean;
+    
 }

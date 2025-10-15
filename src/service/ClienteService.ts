@@ -2,48 +2,69 @@ import { IClienteService } from "../Repository/insterfaces/IClienteService";
 import { IRepositorioClientes } from "../Repository/insterfaces/IRepositorioClientes";
 import Cliente from "../model/Cliente";
 import { ClientType } from "../model/ClientType";
+import { ClienteError } from "../erros/ClienteError";
 
-/**
- * Implementa a lógica de negócio para o gerenciamento de clientes.
- * Depende de uma abstração (IRepositorioClientes) para persistir os dados.
- */
+
 export default class ClienteService implements IClienteService {
-    
-    // Injeção de Dependência via construtor.
-    // O 'private readonly' é um atalho do TypeScript para declarar e atribuir a propriedade.
-    constructor(private  repositorioClientes: IRepositorioClientes) {}
+
+    constructor(private readonly repositorioClientes: IRepositorioClientes) {}
 
     public criarCliente(nome: string, cpf: string, tipo: ClientType): Cliente {
-        if (!nome || !cpf) {
-            throw new Error("Nome e CPF são obrigatórios.");
+        try {
+            if (!nome || !cpf) {
+                throw new ClienteError("Nome e CPF são obrigatórios.");
+            }
+
+            const clienteExistente = this.repositorioClientes.buscarPorCpf(cpf);
+            if (clienteExistente) {
+                throw new ClienteError("Cliente com este CPF já existe.");
+            }
+
+            const novoCliente = new Cliente();
+            novoCliente.setNome(nome);
+            novoCliente.setCpf(cpf);
+            novoCliente.setTipo(tipo);
+
+            this.repositorioClientes.salvarCliente(novoCliente);
+            return novoCliente;
+
+        } catch (error) {
+            if (error instanceof ClienteError) {
+                throw error; // re-lança o erro personalizado
+            }
+            throw new ClienteError("Erro ao criar cliente: " + (error as Error).message);
         }
-        const clienteExistente = this.repositorioClientes.buscarPorCpf(cpf);
-        if (clienteExistente) {
-            throw new Error("Cliente com este CPF já existe.");
-        }
-        
-        const novoCliente = new Cliente();
-        novoCliente.setNome(nome);
-        novoCliente.setCpf(cpf);
-        novoCliente.setTipo(tipo);
-        
-        this.repositorioClientes.salvarCliente(novoCliente);
-        return novoCliente;
     }
 
     public listarClientes(): Cliente[] {
-        return this.repositorioClientes.listarClientes();
+        try {
+            return this.repositorioClientes.listarClientes();
+        } catch (error) {
+            throw new ClienteError("Erro ao listar clientes: " + (error as Error).message);
+        }
     }
-    
+
     public buscarClientePorCpf(cpf: string): Cliente | undefined {
-        return this.repositorioClientes.buscarPorCpf(cpf);
+        try {
+            return this.repositorioClientes.buscarPorCpf(cpf);
+        } catch (error) {
+            throw new ClienteError("Erro ao buscar cliente por CPF: " + (error as Error).message);
+        }
     }
- 
+
     public atualizarCliente(cpf: string, novosDados: { nome: string; tipo: ClientType; }): Cliente | null {
-        return this.repositorioClientes.atualizar(cpf, novosDados);
+        try {
+            return this.repositorioClientes.atualizar(cpf, novosDados);
+        } catch (error) {
+            throw new ClienteError("Erro ao atualizar cliente: " + (error as Error).message);
+        }
     }
-    
+
     public excluirCliente(cpf: string): boolean {
-        return this.repositorioClientes.excluir(cpf);
+        try {
+            return this.repositorioClientes.excluir(cpf);
+        } catch (error) {
+            throw new ClienteError("Erro ao excluir cliente: " + (error as Error).message);
+        }
     }
 }
