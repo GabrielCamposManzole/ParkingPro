@@ -5,7 +5,6 @@ import ClienteService from "./service/ClienteService";
 import VeiculoService from "./service/VeiculoService";
 import VagaService from "./service/VagaService";
 import TerminalView from "./view/TerminalView";
-import ClienteView from "./view/ClienteView"; // Importe a ClienteView se necessário
 
 // --- COMPOSITION ROOT ---
 
