@@ -1,6 +1,6 @@
 import Veiculo from "../model/Veiculo";
 import { IRepositorioVagas } from "../Repository/insterfaces/IRepositorioVagas";
-import { IRepositorioVeiculos } from "../Repository/insterfaces/RepositorioVeiculos";
+import { IRepositorioVeiculos } from "../Repository/insterfaces/IRepositorioVeiculos";
 import { IEstacionamentoService } from "../Repository/insterfaces/IEstacionamentoService";
 
 /**

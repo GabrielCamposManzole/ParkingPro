@@ -1,5 +1,5 @@
 import { IVeiculoService } from "../Repository/insterfaces/IVeiculoService";
-import { IRepositorioVeiculos } from "../Repository/insterfaces/RepositorioVeiculos";
+import { IRepositorioVeiculos } from "../Repository/insterfaces/IRepositorioVeiculos";
 import Cliente from "../model/Cliente";
 import Veiculo from "../model/Veiculo";
 import Carro from "../model/Carro";

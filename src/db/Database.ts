@@ -8,7 +8,7 @@ import { TipoVeiculo } from "../model/TipoVeiculo";
 import { ClientType } from "../model/ClientType";
 
 import { IRepositorioVagas } from "../Repository/insterfaces/IRepositorioVagas";
-import { IRepositorioVeiculos } from "../Repository/insterfaces/RepositorioVeiculos";
+import { IRepositorioVeiculos } from "../Repository/insterfaces/IRepositorioVeiculos";
 import { IRepositorioClientes } from "../Repository/insterfaces/IRepositorioClientes";
 
 export default class Database implements IRepositorioVagas, IRepositorioVeiculos, IRepositorioClientes {
