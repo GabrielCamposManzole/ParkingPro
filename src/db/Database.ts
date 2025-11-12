@@ -29,7 +29,6 @@ export default class Database implements IRepositorioVagas, IRepositorioVeiculos
      for (let i = 24; i <= 28; i++) this.vagasCaminhao.push(new Vaga(i, TipoVeiculo.CAMINHAO));
    }
    
-   // Implementando IRepositorioVagas 
    public buscarVagaLivre(tipo: TipoVeiculo): Vaga | undefined {
         return this.listarVagasPorTipo(tipo).find(v => !v.isOcupada());
    }
@@ -100,34 +99,57 @@ export default class Database implements IRepositorioVagas, IRepositorioVeiculos
     return this.listarTodosCadastrados().filter(veiculo => veiculo.getCliente()?.getCpf() === cpf);
    }
 
+   
+   public salvar(item: Cliente): void {
+        this.clienteDB.push(item);
+   }
+    
+   public buscarPorId(id: string): Cliente | undefined {
+        return this.clienteDB.find(cliente => cliente.getCpf() === id);
+   }
+
+   public listarTodos(): Cliente[] {
+        return this.clienteDB;
+   }
+
+   public listarClientesOrdenadoPorNome(): Cliente[] {
+        return [...this.clienteDB].sort((a, b) => {
+            return a.getNome().localeCompare(b.getNome());
+        });
+    }
+
    public salvarCliente(cliente: Cliente): void {
-       this.clienteDB.push(cliente);
+       
+       this.salvar(cliente); 
    }
 
    public listarClientes(): Cliente[] {
-       return this.clienteDB;
+       
+       return this.listarTodos(); 
    }
 
    public buscarPorCpf(cpf: string): Cliente | undefined {
-    return this.clienteDB.find(cliente => cliente.getCpf() === cpf);
+       
+       return this.buscarPorId(cpf); 
    }
 
    public atualizar(cpf: string, novosDados: { nome?: string; tipo?: ClientType; }): Cliente | null {
-    const cliente = this.buscarPorCpf(cpf);
-    if (cliente) {
-        if (novosDados.nome) cliente.setNome(novosDados.nome);
-        if (novosDados.tipo) cliente.setTipo(novosDados.tipo);
-        return cliente;
-    }
-    return null;
+       
+       const cliente = this.buscarPorCpf(cpf); 
+       if (cliente) {
+           if (novosDados.nome) cliente.setNome(novosDados.nome);
+           if (novosDados.tipo) cliente.setTipo(novosDados.tipo);
+           return cliente;
+       }
+       return null;
    }
 
    public excluir(cpf: string): boolean {
-    const index = this.clienteDB.findIndex(cliente => cliente.getCpf() === cpf);
-    if (index !== -1) {
-        this.clienteDB.splice(index, 1);
-        return true;
-    }
-    return false;
+       const index = this.clienteDB.findIndex(cliente => cliente.getCpf() === cpf);
+       if (index !== -1) {
+           this.clienteDB.splice(index, 1);
+           return true;
+       }
+       return false;
    }
 }

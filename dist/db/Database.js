@@ -25,7 +25,6 @@ class Database {
         for (let i = 24; i <= 28; i++)
             this.vagasCaminhao.push(new Vaga_1.default(i, TipoVeiculo_1.TipoVeiculo.CAMINHAO));
     }
-    // Implementando IRepositorioVagas 
     buscarVagaLivre(tipo) {
         return this.listarVagasPorTipo(tipo).find(v => !v.isOcupada());
     }
@@ -93,14 +92,28 @@ class Database {
     buscarVeiculosPorCpfCliente(cpf) {
         return this.listarTodosCadastrados().filter(veiculo => veiculo.getCliente()?.getCpf() === cpf);
     }
-    salvarCliente(cliente) {
-        this.clienteDB.push(cliente);
+    salvar(item) {
+        this.clienteDB.push(item);
     }
-    listarClientes() {
+    buscarPorId(id) {
+        return this.clienteDB.find(cliente => cliente.getCpf() === id);
+    }
+    listarTodos() {
         return this.clienteDB;
     }
+    listarClientesOrdenadoPorNome() {
+        return [...this.clienteDB].sort((a, b) => {
+            return a.getNome().localeCompare(b.getNome());
+        });
+    }
+    salvarCliente(cliente) {
+        this.salvar(cliente);
+    }
+    listarClientes() {
+        return this.listarTodos();
+    }
     buscarPorCpf(cpf) {
-        return this.clienteDB.find(cliente => cliente.getCpf() === cpf);
+        return this.buscarPorId(cpf);
     }
     atualizar(cpf, novosDados) {
         const cliente = this.buscarPorCpf(cpf);

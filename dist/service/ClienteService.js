@@ -49,6 +49,14 @@ class ClienteService {
             throw new ClienteError_1.ClienteError("Erro ao buscar cliente por CPF: " + error.message);
         }
     }
+    listarClientesOrdenadoPorNome() {
+        try {
+            return this.repositorioClientes.listarClientesOrdenadoPorNome();
+        }
+        catch (error) {
+            throw new ClienteError_1.ClienteError("Erro ao listar clientes ordenados: " + error.message);
+        }
+    }
     atualizarCliente(cpf, novosDados) {
         try {
             return this.repositorioClientes.atualizar(cpf, novosDados);

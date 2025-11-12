@@ -52,6 +52,14 @@ export default class ClienteService implements IClienteService {
         }
     }
 
+    public listarClientesOrdenadoPorNome(): Cliente[] {
+        try {
+            return this.repositorioClientes.listarClientesOrdenadoPorNome();
+        } catch (error) {
+            throw new ClienteError("Erro ao listar clientes ordenados: " + (error as Error).message);
+        }
+    }
+
     public atualizarCliente(cpf: string, novosDados: { nome: string; tipo: ClientType; }): Cliente | null {
         try {
             return this.repositorioClientes.atualizar(cpf, novosDados);
