@@ -1,0 +1,6 @@
+# Ignora a pasta de dependências (a culpada pelos 6k de arquivos)
+node_modules/
+
+
+
+
