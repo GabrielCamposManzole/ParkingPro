@@ -6,8 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Carro_1 = __importDefault(require("../model/Carro"));
 const Caminhao_1 = __importDefault(require("../model/Caminhao"));
 const Moto_1 = __importDefault(require("../model/Moto"));
-const Vaga_1 = __importDefault(require("../model/Vaga"));
 const TipoVeiculo_1 = require("../model/TipoVeiculo");
+const VagaCarroFactory_1 = require("../model/factory/VagaCarroFactory");
+const VagaMotoFactory_1 = require("../model/factory/VagaMotoFactory");
+const VagaCaminhaoFactory_1 = require("../model/factory/VagaCaminhaoFactory");
 class Database {
     carrosDB = [];
     motosDB = [];
@@ -18,13 +20,20 @@ class Database {
     vagasCaminhao = [];
     veiculosEstacionados = [];
     constructor() {
-        for (let i = 1; i <= 15; i++)
-            this.vagasCarro.push(new Vaga_1.default(i, TipoVeiculo_1.TipoVeiculo.CARRO));
-        for (let i = 16; i <= 23; i++)
-            this.vagasMoto.push(new Vaga_1.default(i, TipoVeiculo_1.TipoVeiculo.MOTO));
-        for (let i = 24; i <= 28; i++)
-            this.vagasCaminhao.push(new Vaga_1.default(i, TipoVeiculo_1.TipoVeiculo.CAMINHAO));
+        const factoryCarro = new VagaCarroFactory_1.VagaCarroFactory();
+        for (let i = 1; i <= 15; i++) {
+            this.vagasCarro.push(factoryCarro.criarVaga(i));
+        }
+        const factoryMoto = new VagaMotoFactory_1.VagaMotoFactory();
+        for (let i = 16; i <= 23; i++) {
+            this.vagasMoto.push(factoryMoto.criarVaga(i));
+        }
+        const factoryCaminhao = new VagaCaminhaoFactory_1.VagaCaminhaoFactory();
+        for (let i = 24; i <= 28; i++) {
+            this.vagasCaminhao.push(factoryCaminhao.criarVaga(i));
+        }
     }
+    // --- Métodos de Vagas ---
     buscarVagaLivre(tipo) {
         return this.listarVagasPorTipo(tipo).find(v => !v.isOcupada());
     }
@@ -39,12 +48,24 @@ class Database {
     listarVagas() {
         return [...this.vagasCarro, ...this.vagasMoto, ...this.vagasCaminhao];
     }
+    getFactory(tipo) {
+        switch (tipo) {
+            case TipoVeiculo_1.TipoVeiculo.CARRO: return new VagaCarroFactory_1.VagaCarroFactory();
+            case TipoVeiculo_1.TipoVeiculo.MOTO: return new VagaMotoFactory_1.VagaMotoFactory();
+            case TipoVeiculo_1.TipoVeiculo.CAMINHAO: return new VagaCaminhaoFactory_1.VagaCaminhaoFactory();
+            default: return null;
+        }
+    }
     addVaga(tipo, numero) {
         const vagaExistente = this.listarVagas().find(v => v.getNumero() === numero);
         if (vagaExistente) {
             return false;
         }
-        const novaVaga = new Vaga_1.default(numero, tipo);
+        const factory = this.getFactory(tipo);
+        if (!factory) {
+            return false;
+        }
+        const novaVaga = factory.criarVaga(numero);
         switch (tipo) {
             case TipoVeiculo_1.TipoVeiculo.CARRO:
                 this.vagasCarro.push(novaVaga);
@@ -61,6 +82,7 @@ class Database {
     buscarVagaPorPlaca(placa) {
         return this.listarVagas().find(vaga => vaga.getVeiculoEstacionado()?.getPlaca() === placa);
     }
+    // --- Métodos de Veículos ---
     buscarVeiculoPorPlaca(placa) {
         return this.veiculosEstacionados.find(v => v.getPlaca() === placa);
     }
@@ -92,6 +114,7 @@ class Database {
     buscarVeiculosPorCpfCliente(cpf) {
         return this.listarTodosCadastrados().filter(veiculo => veiculo.getCliente()?.getCpf() === cpf);
     }
+    // --- Métodos de Clientes ---
     salvar(item) {
         this.clienteDB.push(item);
     }

@@ -1,5 +1,4 @@
 import Vaga from "../../model/Vaga";
-import Veiculo from "../../model/Veiculo";
 import { TipoVeiculo } from "../../model/TipoVeiculo";
 
 export interface IRepositorioVagas {

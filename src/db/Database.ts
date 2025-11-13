@@ -11,6 +11,12 @@ import { IRepositorioVagas } from "../Repository/insterfaces/IRepositorioVagas";
 import { IRepositorioVeiculos } from "../Repository/insterfaces/IRepositorioVeiculos";
 import { IRepositorioClientes } from "../Repository/insterfaces/IRepositorioClientes";
 
+import { VagaFactory } from "../model/factory/VagaFactory";
+import { VagaCarroFactory } from "../model/factory/VagaCarroFactory";
+import { VagaMotoFactory } from "../model/factory/VagaMotoFactory";
+import { VagaCaminhaoFactory } from "../model/factory/VagaCaminhaoFactory";
+
+
 export default class Database implements IRepositorioVagas, IRepositorioVeiculos, IRepositorioClientes {
 
    public carrosDB: Carro[] = [];
@@ -24,11 +30,25 @@ export default class Database implements IRepositorioVagas, IRepositorioVeiculos
    private veiculosEstacionados: Veiculo[] = [];
 
    constructor() {
-     for (let i = 1; i <= 15; i++) this.vagasCarro.push(new Vaga(i, TipoVeiculo.CARRO));
-     for (let i = 16; i <= 23; i++) this.vagasMoto.push(new Vaga(i, TipoVeiculo.MOTO));
-     for (let i = 24; i <= 28; i++) this.vagasCaminhao.push(new Vaga(i, TipoVeiculo.CAMINHAO));
+     
+     const factoryCarro = new VagaCarroFactory();
+     for (let i = 1; i <= 15; i++) {
+         this.vagasCarro.push(factoryCarro.criarVaga(i));
+     }
+
+     const factoryMoto = new VagaMotoFactory();
+     for (let i = 16; i <= 23; i++) {
+         this.vagasMoto.push(factoryMoto.criarVaga(i));
+     }
+     
+     const factoryCaminhao = new VagaCaminhaoFactory();
+     for (let i = 24; i <= 28; i++) {
+         this.vagasCaminhao.push(factoryCaminhao.criarVaga(i));
+     }
    }
    
+   // --- Métodos de Vagas ---
+
    public buscarVagaLivre(tipo: TipoVeiculo): Vaga | undefined {
         return this.listarVagasPorTipo(tipo).find(v => !v.isOcupada());
    }
@@ -46,12 +66,28 @@ export default class Database implements IRepositorioVagas, IRepositorioVeiculos
     return [...this.vagasCarro, ...this.vagasMoto, ...this.vagasCaminhao];
    }
    
+   private getFactory(tipo: TipoVeiculo): VagaFactory | null {
+       switch (tipo) {
+           case TipoVeiculo.CARRO: return new VagaCarroFactory();
+           case TipoVeiculo.MOTO: return new VagaMotoFactory();
+           case TipoVeiculo.CAMINHAO: return new VagaCaminhaoFactory();
+           default: return null;
+       }
+   }
+
    public addVaga(tipo: TipoVeiculo, numero: number): boolean {
     const vagaExistente = this.listarVagas().find(v => v.getNumero() === numero);
     if (vagaExistente) {
         return false; 
     }
-    const novaVaga = new Vaga(numero, tipo);
+    
+    const factory = this.getFactory(tipo);
+    if (!factory) {
+        return false; 
+    }
+
+    const novaVaga = factory.criarVaga(numero);
+
     switch (tipo) {
       case TipoVeiculo.CARRO: this.vagasCarro.push(novaVaga); return true;
       case TipoVeiculo.MOTO: this.vagasMoto.push(novaVaga); return true;
@@ -64,6 +100,7 @@ export default class Database implements IRepositorioVagas, IRepositorioVeiculos
     return this.listarVagas().find(vaga => vaga.getVeiculoEstacionado()?.getPlaca() === placa);
   }
 
+  // --- Métodos de Veículos ---
    public buscarVeiculoPorPlaca(placa: string): Veiculo | undefined {
         return this.veiculosEstacionados.find(v => v.getPlaca() === placa);
    }
@@ -100,41 +137,39 @@ export default class Database implements IRepositorioVagas, IRepositorioVeiculos
    }
 
    
+   // --- Métodos de Clientes ---
+
    public salvar(item: Cliente): void {
-        this.clienteDB.push(item);
+       this.clienteDB.push(item);
    }
     
    public buscarPorId(id: string): Cliente | undefined {
-        return this.clienteDB.find(cliente => cliente.getCpf() === id);
+       return this.clienteDB.find(cliente => cliente.getCpf() === id);
    }
 
    public listarTodos(): Cliente[] {
-        return this.clienteDB;
+       return this.clienteDB;
    }
 
    public listarClientesOrdenadoPorNome(): Cliente[] {
-        return [...this.clienteDB].sort((a, b) => {
-            return a.getNome().localeCompare(b.getNome());
-        });
+       return [...this.clienteDB].sort((a, b) => {
+           return a.getNome().localeCompare(b.getNome());
+       });
     }
 
    public salvarCliente(cliente: Cliente): void {
-       
        this.salvar(cliente); 
    }
 
    public listarClientes(): Cliente[] {
-       
        return this.listarTodos(); 
    }
 
    public buscarPorCpf(cpf: string): Cliente | undefined {
-       
        return this.buscarPorId(cpf); 
    }
 
    public atualizar(cpf: string, novosDados: { nome?: string; tipo?: ClientType; }): Cliente | null {
-       
        const cliente = this.buscarPorCpf(cpf); 
        if (cliente) {
            if (novosDados.nome) cliente.setNome(novosDados.nome);

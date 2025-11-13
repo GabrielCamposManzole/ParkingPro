@@ -18,7 +18,7 @@ class EstacionamentoController {
         this.veiculoService = veiculoService;
         this.vagaService = vagaService;
     }
-    // --- Métodos de Clientes (delegam para ClienteService) ---
+    // --- Métodos de Clientes ---
     criarCliente(nome, cpf, tipo) {
         return this.clienteService.criarCliente(nome, cpf, tipo);
     }
@@ -37,7 +37,7 @@ class EstacionamentoController {
     getClientesCadastrados() {
         return this.clienteService.listarClientes().length;
     }
-    // --- Métodos de Veículos (delegam para VeiculoService) ---
+    // --- Métodos de Veículos ---
     criarCarro(placa, modelo, cor, cliente) {
         return this.veiculoService.criarCarro(placa, modelo, cor, cliente);
     }
@@ -53,7 +53,7 @@ class EstacionamentoController {
     buscarVeiculosPorCliente(cpf) {
         return this.veiculoService.buscarVeiculosPorCliente(cpf);
     }
-    // --- Métodos de Estacionamento (delegam para EstacionamentoService) ---
+    // --- Métodos de Estacionamento  ---
     estacionarVeiculo(dados) {
         let veiculo;
         switch (dados.tipo) {
@@ -82,7 +82,7 @@ class EstacionamentoController {
     getVagasDisponiveis() {
         return this.estacionamentoService.vagasDisponiveis();
     }
-    // --- Métodos de Vagas (delegam para VagaService) ---
+    // --- Métodos de Vagas  ---
     getVagasTotais() {
         return this.vagaService.getVagasTotais();
     }
