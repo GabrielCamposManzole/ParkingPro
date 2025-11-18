@@ -3,12 +3,10 @@ import { IRepositorioVagas } from "../Repository/insterfaces/IRepositorioVagas";
 import { IRepositorioVeiculos } from "../Repository/insterfaces/IRepositorioVeiculos";
 import { IEstacionamentoService } from "../Repository/insterfaces/IEstacionamentoService";
 
-/**
- * Implementa a lógica de negócio para estacionar e remover veículos.
- */
+
 export default class EstacionarVeiculoService implements IEstacionamentoService {
     
-    // Injeção de Dependência via construtor.
+    
     constructor(
         private readonly repositorioVagas: IRepositorioVagas, 
         private readonly repositorioVeiculos: IRepositorioVeiculos

@@ -1,7 +1,7 @@
 
 import Cliente from "../../model/Cliente";
 import { ClientType } from "../../model/ClientType";
-import { IRepositorioGenerico } from "./IRepositorioGenerico"; // <-- 1. IMPORTE AQUI
+import { IRepositorioGenerico } from "./IRepositorioGenerico"; 
 
 
 export interface IRepositorioClientes extends IRepositorioGenerico<Cliente, string> { 

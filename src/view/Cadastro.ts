@@ -31,13 +31,12 @@ export default class Cadastro {
                   valorMensal = this.prompt("Valor Mensal a ser cobrado: ");
             }
 
-            // --- ATUALIZAÇÃO AQUI ---
-            // Adicionamos try...catch para capturar o erro do ClienteService
+           
             try {
                   // 1. Tenta criar o cliente
                   const novoCliente = this.controller.criarCliente(nome, cpf, tipo as ClientType);
 
-                  // 2. Se der certo, mostra o sucesso
+                 
                   console.log("\nCliente cadastrado com sucesso!");
                   console.log(`Nome: ${novoCliente.getNome()}`);
                   console.log(`CPF: ${novoCliente.getCpf()}`);
@@ -47,10 +46,10 @@ export default class Cadastro {
                   }
 
             } catch (error: any) {
-                  // 3. Se o ClienteService lançar o erro, ele é capturado aqui!
+                 
                   console.log(`\nFalha no cadastro: ${error.message}`);
             }
-            // --- FIM DA ATUALIZAÇÃO ---
+           
       }
        
       public cadastrarVeiculo(): void {
@@ -60,14 +59,10 @@ export default class Cadastro {
                 console.log("Não há clientes cadastrados no sistema. Por favor, cadastre um cliente primeiro.");
                 return;
             }
-
-            // --- ATUALIZAÇÃO AQUI ---
-            // Também adicionamos try...catch aqui, pois buscarClientePorCpf
-            // também pode lançar um erro (ex: erro de banco ou validação)
+          
             try {
                   const cpf = this.prompt("Digite o CPF do cliente proprietário do veículo: ");
                   
-                  // Esta chamada pode falhar
                   const clienteSelecionado = this.controller.buscarClientePorCpf(cpf); 
 
                   if (!clienteSelecionado) {
@@ -115,6 +110,6 @@ export default class Cadastro {
                   // Captura o erro do buscarClientePorCpf
                   console.log(`\nErro ao processar cadastro de veículo: ${error.message}`);
             }
-            // --- FIM DA ATUALIZAÇÃO ---
+           
       }
 }
