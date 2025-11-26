@@ -32,5 +32,8 @@ class Veiculo {
     getCliente() {
         return this.cliente;
     }
+    getDescricao() {
+        return this.getCor() + " " + this.getModelo() + " - " + this.getPlaca();
+    }
 }
 exports.default = Veiculo;
