@@ -1,12 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Implementa a lógica de negócio para estacionar e remover veículos.
- */
 class EstacionarVeiculoService {
     repositorioVagas;
     repositorioVeiculos;
-    // Injeção de Dependência via construtor.
     constructor(repositorioVagas, repositorioVeiculos) {
         this.repositorioVagas = repositorioVagas;
         this.repositorioVeiculos = repositorioVeiculos;
