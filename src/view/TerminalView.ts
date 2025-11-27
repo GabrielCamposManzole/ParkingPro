@@ -4,6 +4,7 @@ import Cadastro from "./Cadastro";
 import EstacionarVeiculoView from "./EstacionarVeiculoView";
 import { ClientType } from "../model/ClientType";
 import { TipoVeiculo } from "../model/TipoVeiculo";
+import Vaga from "../model/Vaga";
 
 
 export default class TerminalView {
@@ -114,16 +115,52 @@ export default class TerminalView {
     while (subMenuContinues) {
       console.log("\n--- Gestão do Estacionamento ---");
       console.log("1. Adicionar Nova Vaga");
-      console.log("2. Voltar");
+      console.log("2. Buscar Vaga (por número ou placa)");
+        console.log("3. Voltar ao Menu Principal");
       const escolha = this.prompt("Escolha uma opção: ");
       switch (escolha) {
         case "1": this.adicionarNovaVaga(); 
         break;
-        case "2": subMenuContinues = false; 
+        case "2": this.buscarVagaInteligente(); 
+        break;
+        case "3": subMenuContinues = false
         break;
         default: console.log("Opção inválida.");
       }
     }
+  }
+
+private buscarVagaInteligente(): void {
+      console.log("\n--- Busca Inteligente de Vaga ---");
+      const entrada = this.prompt("Digite o Número da Vaga OU a Placa do Veículo: ");
+
+      let resultado: Vaga | undefined;
+
+      // Verifica se a entrada parece um número
+      if (!isNaN(Number(entrada))) {
+          const numero = parseInt(entrada);
+          // 1. Tenta buscar pelo NÚMERO da Vaga
+          resultado = this.controller.buscarVagaInteligente(numero);
+          // Se não achou vaga com esse número 
+          // então assume que o usuário digitou uma PLACA.
+          if (!resultado) {
+              resultado = this.controller.buscarVagaInteligente(entrada.toString());
+          }
+      } else {
+          // Não é número (tem letras), então com certeza é uma Placa
+          resultado = this.controller.buscarVagaInteligente(entrada);
+      }
+
+      if (resultado) {
+          const vaga = resultado;
+          const status = vaga.isOcupada() ? `OCUPADA por ${vaga.getVeiculoEstacionado()?.getPlaca()}` : "LIVRE";
+          console.log(`\n✅ Vaga Encontrada!`);
+          console.log(`Número: ${vaga.getNumero()}`);
+          console.log(`Tipo: ${vaga.getTipoVaga()}`);
+          console.log(`Status: ${status}`);
+      } else {
+          console.log("\n❌ Nenhuma vaga encontrada pelo Número ou pela Placa informada.");
+      }
   }
 
   private exibirDashboard(): void {

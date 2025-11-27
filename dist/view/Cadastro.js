@@ -27,12 +27,9 @@ class Cadastro {
         if (tipo === ClientType_1.ClientType.MENSALISTA) {
             valorMensal = this.prompt("Valor Mensal a ser cobrado: ");
         }
-        // --- ATUALIZAÇÃO AQUI ---
-        // Adicionamos try...catch para capturar o erro do ClienteService
         try {
             // 1. Tenta criar o cliente
             const novoCliente = this.controller.criarCliente(nome, cpf, tipo);
-            // 2. Se der certo, mostra o sucesso
             console.log("\nCliente cadastrado com sucesso!");
             console.log(`Nome: ${novoCliente.getNome()}`);
             console.log(`CPF: ${novoCliente.getCpf()}`);
@@ -42,10 +39,8 @@ class Cadastro {
             }
         }
         catch (error) {
-            // 3. Se o ClienteService lançar o erro, ele é capturado aqui!
             console.log(`\nFalha no cadastro: ${error.message}`);
         }
-        // --- FIM DA ATUALIZAÇÃO ---
     }
     cadastrarVeiculo() {
         console.log("\n=== Cadastro de Veículo para Cliente ===");
@@ -53,12 +48,8 @@ class Cadastro {
             console.log("Não há clientes cadastrados no sistema. Por favor, cadastre um cliente primeiro.");
             return;
         }
-        // --- ATUALIZAÇÃO AQUI ---
-        // Também adicionamos try...catch aqui, pois buscarClientePorCpf
-        // também pode lançar um erro (ex: erro de banco ou validação)
         try {
             const cpf = this.prompt("Digite o CPF do cliente proprietário do veículo: ");
-            // Esta chamada pode falhar
             const clienteSelecionado = this.controller.buscarClientePorCpf(cpf);
             if (!clienteSelecionado) {
                 console.log(`\nErro: Nenhum cliente encontrado com o CPF '${cpf}'. Operação cancelada.`);
@@ -99,7 +90,6 @@ class Cadastro {
             // Captura o erro do buscarClientePorCpf
             console.log(`\nErro ao processar cadastro de veículo: ${error.message}`);
         }
-        // --- FIM DA ATUALIZAÇÃO ---
     }
 }
 exports.default = Cadastro;

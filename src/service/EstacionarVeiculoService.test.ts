@@ -8,18 +8,13 @@ import { IRepositorioVagas } from "../Repository/insterfaces/IRepositorioVagas";
 import { IRepositorioVeiculos } from "../Repository/insterfaces/IRepositorioVeiculos";
 import EstacionarVeiculoService from "./EstacionarVeiculoService";
 
-// --- MOCK 1: Repositório de Vagas ---
-
 
 class MockRepositorioVagas implements IRepositorioVagas {
-    
     
     public vagaLivreParaRetornar: Vaga | undefined = undefined;
     public vagaOcupadaParaRetornar: Vaga | undefined = undefined;
 
-  
     public buscarVagaLivre(tipo: TipoVeiculo): Vaga | undefined {
-        
         if (this.vagaLivreParaRetornar?.getTipoVaga() === tipo) {
             return this.vagaLivreParaRetornar;
         }
@@ -33,12 +28,17 @@ class MockRepositorioVagas implements IRepositorioVagas {
         return undefined;
     }
 
-    
+    public buscarVagaPorNumero(numero: number): Vaga | undefined {
+        // Retornamos undefined apenas para satisfazer o contrato da interface,
+        // já que este teste específico não está testando a busca por número.
+        return undefined; 
+    }
+   
+
     public listarVagasPorTipo(tipo: TipoVeiculo): Vaga[] { return []; }
     public addVaga(tipo: TipoVeiculo, numero: number): boolean { return true; }
     public listarVagas(): Vaga[] { return []; }
 }
-
 
 
 class MockRepositorioVeiculos implements IRepositorioVeiculos {

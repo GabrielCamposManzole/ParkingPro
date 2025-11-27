@@ -98,5 +98,13 @@ class EstacionamentoController {
     addVaga(tipo, numero) {
         return this.vagaService.addVaga(tipo, numero);
     }
+    buscarVagaInteligente(indentificador) {
+        if (typeof indentificador === 'string') {
+            return this.vagaService.buscarVaga(indentificador);
+        }
+        else {
+            return this.vagaService.buscarVaga(indentificador);
+        }
+    }
 }
 exports.default = EstacionamentoController;

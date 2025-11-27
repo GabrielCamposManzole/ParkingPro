@@ -35,14 +35,18 @@ class Database {
     }
     // --- Métodos de Vagas ---
     buscarVagaLivre(tipo) {
-        return this.listarVagasPorTipo(tipo).find(v => !v.isOcupada());
+        return this.listarVagasPorTipo(tipo).find((v) => !v.isOcupada());
     }
     listarVagasPorTipo(tipo) {
         switch (tipo) {
-            case TipoVeiculo_1.TipoVeiculo.CARRO: return this.vagasCarro;
-            case TipoVeiculo_1.TipoVeiculo.MOTO: return this.vagasMoto;
-            case TipoVeiculo_1.TipoVeiculo.CAMINHAO: return this.vagasCaminhao;
-            default: return [];
+            case TipoVeiculo_1.TipoVeiculo.CARRO:
+                return this.vagasCarro;
+            case TipoVeiculo_1.TipoVeiculo.MOTO:
+                return this.vagasMoto;
+            case TipoVeiculo_1.TipoVeiculo.CAMINHAO:
+                return this.vagasCaminhao;
+            default:
+                return [];
         }
     }
     listarVagas() {
@@ -50,14 +54,18 @@ class Database {
     }
     getFactory(tipo) {
         switch (tipo) {
-            case TipoVeiculo_1.TipoVeiculo.CARRO: return new VagaCarroFactory_1.VagaCarroFactory();
-            case TipoVeiculo_1.TipoVeiculo.MOTO: return new VagaMotoFactory_1.VagaMotoFactory();
-            case TipoVeiculo_1.TipoVeiculo.CAMINHAO: return new VagaCaminhaoFactory_1.VagaCaminhaoFactory();
-            default: return null;
+            case TipoVeiculo_1.TipoVeiculo.CARRO:
+                return new VagaCarroFactory_1.VagaCarroFactory();
+            case TipoVeiculo_1.TipoVeiculo.MOTO:
+                return new VagaMotoFactory_1.VagaMotoFactory();
+            case TipoVeiculo_1.TipoVeiculo.CAMINHAO:
+                return new VagaCaminhaoFactory_1.VagaCaminhaoFactory();
+            default:
+                return null;
         }
     }
     addVaga(tipo, numero) {
-        const vagaExistente = this.listarVagas().find(v => v.getNumero() === numero);
+        const vagaExistente = this.listarVagas().find((v) => v.getNumero() === numero);
         if (vagaExistente) {
             return false;
         }
@@ -76,18 +84,23 @@ class Database {
             case TipoVeiculo_1.TipoVeiculo.CAMINHAO:
                 this.vagasCaminhao.push(novaVaga);
                 return true;
-            default: return false;
+            default:
+                return false;
         }
     }
     buscarVagaPorPlaca(placa) {
-        return this.listarVagas().find(vaga => vaga.getVeiculoEstacionado()?.getPlaca() === placa);
+        return this.listarVagas().find((vaga) => vaga.getVeiculoEstacionado()?.getPlaca() === placa);
     }
     // --- Métodos de Veículos ---
     buscarVeiculoPorPlaca(placa) {
-        return this.veiculosEstacionados.find(v => v.getPlaca() === placa);
+        return this.veiculosEstacionados.find((v) => v.getPlaca() === placa);
+    }
+    // --- Adicionado método buscarVagaPorNumero ---
+    buscarVagaPorNumero(numero) {
+        return this.listarVagas().find(v => v.getNumero() === numero);
     }
     removerVeiculoPorPlaca(placa) {
-        const index = this.veiculosEstacionados.findIndex(v => v.getPlaca() === placa);
+        const index = this.veiculosEstacionados.findIndex((v) => v.getPlaca() === placa);
         if (index !== -1) {
             this.veiculosEstacionados.splice(index, 1);
             return true;
@@ -112,14 +125,14 @@ class Database {
         return [...this.carrosDB, ...this.motosDB, ...this.caminhoesDB];
     }
     buscarVeiculosPorCpfCliente(cpf) {
-        return this.listarTodosCadastrados().filter(veiculo => veiculo.getCliente()?.getCpf() === cpf);
+        return this.listarTodosCadastrados().filter((veiculo) => veiculo.getCliente()?.getCpf() === cpf);
     }
     // --- Métodos de Clientes ---
     salvar(item) {
         this.clienteDB.push(item);
     }
     buscarPorId(id) {
-        return this.clienteDB.find(cliente => cliente.getCpf() === id);
+        return this.clienteDB.find((cliente) => cliente.getCpf() === id);
     }
     listarTodos() {
         return this.clienteDB;
@@ -150,7 +163,7 @@ class Database {
         return null;
     }
     excluir(cpf) {
-        const index = this.clienteDB.findIndex(cliente => cliente.getCpf() === cpf);
+        const index = this.clienteDB.findIndex((cliente) => cliente.getCpf() === cpf);
         if (index !== -1) {
             this.clienteDB.splice(index, 1);
             return true;

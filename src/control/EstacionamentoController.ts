@@ -97,4 +97,12 @@ export default class EstacionamentoController {
     public addVaga(tipo: TipoVeiculo, numero: number): boolean {
         return this.vagaService.addVaga(tipo, numero);
     }
-}
+
+    public buscarVagaInteligente(indentificador : number | string): Vaga | undefined {
+        if (typeof indentificador === 'string') {
+            return this.vagaService.buscarVaga(indentificador);
+        } else {
+            return this.vagaService.buscarVaga(indentificador);
+        }
+        }
+    }

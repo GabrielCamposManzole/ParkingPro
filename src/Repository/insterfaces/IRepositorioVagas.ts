@@ -6,5 +6,7 @@ export interface IRepositorioVagas {
     listarVagasPorTipo(tipo: TipoVeiculo): Vaga[];
     addVaga(tipo: TipoVeiculo, numero: number): boolean;
     listarVagas(): Vaga[];
-    buscarVagaPorPlaca(placa: string): Vaga | undefined; 
+    buscarVagaPorPlaca(placa: string): Vaga | undefined;
+    // --- Adicionado método buscarVagaPorNumero ---
+    buscarVagaPorNumero(numero: number): Vaga | undefined;
 }

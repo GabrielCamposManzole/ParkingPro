@@ -20,5 +20,16 @@ class VagaService {
     addVaga(tipo, numero) {
         return this.repositorioVagas.addVaga(tipo, numero);
     }
+    // Implementação da sobrecarga 
+    buscarVaga(indentificador) {
+        if (typeof indentificador === 'number') {
+            console.log(`Buscando vaga pelo número: ${indentificador}`);
+            return this.repositorioVagas.buscarVagaPorNumero(indentificador);
+        }
+        else {
+            console.log(`Buscando vaga pela placa: ${indentificador}`);
+            return this.repositorioVagas.buscarVagaPorPlaca(indentificador);
+        }
+    }
 }
 exports.default = VagaService;
