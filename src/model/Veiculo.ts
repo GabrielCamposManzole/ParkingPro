@@ -40,4 +40,9 @@ export default abstract class Veiculo {
   }
   
   public abstract getTipo(): TipoVeiculo;
+
+
+  public getDescricao(): string { 
+  return this.getCor() + " " + this.getModelo() + " - " + this.getPlaca();
+  }
 }

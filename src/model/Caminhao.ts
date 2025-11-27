@@ -10,4 +10,8 @@ export default class Caminhao extends Veiculo {
     public getTipo(): TipoVeiculo {
       return TipoVeiculo.CAMINHAO;
     }
+
+    public fazAlgo(s: any, n?: any): any {
+        console.log("Caminhão não faz nada.");
+    }
 }

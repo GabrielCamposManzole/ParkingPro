@@ -12,5 +12,8 @@ class Caminhao extends Veiculo_1.default {
     getTipo() {
         return TipoVeiculo_1.TipoVeiculo.CAMINHAO;
     }
+    fazAlgo(s, n) {
+        console.log("Caminhão não faz nada.");
+    }
 }
 exports.default = Caminhao;

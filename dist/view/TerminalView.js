@@ -154,10 +154,9 @@ class TerminalView {
             const numero = parseInt(entrada);
             // 1. Tenta buscar pelo NÚMERO da Vaga
             resultado = this.controller.buscarVagaInteligente(numero);
-            // Se não achou vaga com esse número (ex: digitou 123, mas só tem 30 vagas),
-            // então assume que o usuário digitou uma PLACA numérica.
+            // Se não achou vaga com esse número 
+            // então assume que o usuário digitou uma PLACA.
             if (!resultado) {
-                // console.log(`(Debug: Vaga ID ${numero} não existe. Tentando buscar como Placa "${entrada}"...)`);
                 resultado = this.controller.buscarVagaInteligente(entrada.toString());
             }
         }

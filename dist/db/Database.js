@@ -91,13 +91,13 @@ class Database {
     buscarVagaPorPlaca(placa) {
         return this.listarVagas().find((vaga) => vaga.getVeiculoEstacionado()?.getPlaca() === placa);
     }
+    // --- método buscarVagaPorNumero ---
+    buscarVagaPorNumero(numero) {
+        return this.listarVagas().find(v => v.getNumero() === numero);
+    }
     // --- Métodos de Veículos ---
     buscarVeiculoPorPlaca(placa) {
         return this.veiculosEstacionados.find((v) => v.getPlaca() === placa);
-    }
-    // --- Adicionado método buscarVagaPorNumero ---
-    buscarVagaPorNumero(numero) {
-        return this.listarVagas().find(v => v.getNumero() === numero);
     }
     removerVeiculoPorPlaca(placa) {
         const index = this.veiculosEstacionados.findIndex((v) => v.getPlaca() === placa);

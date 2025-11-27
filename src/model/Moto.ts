@@ -13,5 +13,8 @@ export default class Moto extends Veiculo {
     return TipoVeiculo.MOTO;
   }
   
+  public fazAlgo(s: any, n?: any): any {
+      console.log("Moto não faz nada.");
 
+}
 }

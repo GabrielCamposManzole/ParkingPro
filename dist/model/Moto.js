@@ -12,5 +12,8 @@ class Moto extends Veiculo_1.default {
     getTipo() {
         return TipoVeiculo_1.TipoVeiculo.MOTO;
     }
+    fazAlgo(s, n) {
+        console.log("Moto não faz nada.");
+    }
 }
 exports.default = Moto;
